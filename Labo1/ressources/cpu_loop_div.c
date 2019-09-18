@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <float.h>
 
-#define n_sec 10
+#define n_sec 1
 
 int main(void)
 {
@@ -14,10 +14,10 @@ int main(void)
 	unsigned long long nb_iterations = 0;
 	while(time(NULL) < (start_time + n_sec)) {
 		++nb_iterations;
-		floatDonne /= nb_iterations;
+		floatDonne /= 1.17291;
 	}
 
-	printf("Nombre d'iteration par seconde (div float) = %llu\n%f", (nb_iterations/n_sec), floatDonne);
+	printf("Nombre d'iteration par seconde (div float) = %llu\n%f\n", (nb_iterations/n_sec), floatDonne);
 
     return EXIT_SUCCESS;
 }

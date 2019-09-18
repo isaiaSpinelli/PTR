@@ -9,12 +9,12 @@ int main(void)
 {
 	time_t start_time = time(NULL);
 
-	unsigned int nb_iterations = 0;
+	unsigned long long nb_iterations = 0;
 	while(time(NULL) < (start_time + n_sec)) {
 		++nb_iterations;
 	}
 
-	printf("Nombre d'iteration = %d (%d)\n", nb_iterations, getpid());
+	printf("Nombre d'iteration par seconde = %llu (%d)\n", (nb_iterations/n_sec), getpid());
 
     return EXIT_SUCCESS;
 }
