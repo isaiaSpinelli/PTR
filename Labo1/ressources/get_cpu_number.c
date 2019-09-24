@@ -7,20 +7,29 @@
 
 int sched_getcpu(void);
 
-#define sec_interval 1
 #define n_sec 12
 
 int main(void)
 {
 	time_t start_time = time(NULL);
-	int i = 1;
+
+	int CPU_N = sched_getcpu();
+	int CPU_N_2 = CPU_N; 
+	// Permet d'avoir l'heure courrante
+	time_t curtime;
+	struct tm *loctime;
 	
-	printf("CPU = %d (Demarrage)\n", sched_getcpu());
+	printf("CPU = %d (Demarrage)\n", CPU_N);
 
 	while(time(NULL) < (start_time + n_sec)) {
-		if (time(NULL) > start_time + (i*sec_interval)) {
-			i++;
-			printf("CPU = %d\n", sched_getcpu());
+		CPU_N_2 = sched_getcpu();
+		if (CPU_N != CPU_N_2) {
+			CPU_N = CPU_N_2;
+			
+			curtime = time (NULL);
+			loctime = localtime (&curtime);
+			
+			printf("CPU = %d (%d:%d:%d)\n", CPU_N, loctime->tm_hour,loctime->tm_min,loctime->tm_sec);
 		}
 	}
 	

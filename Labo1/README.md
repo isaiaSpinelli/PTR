@@ -48,7 +48,7 @@ Le nombre d'itération de cpu_loop chute car le precessus "get_cpu_number" prend
 
 Delogement de get_cpu_number :
 
-![image](/img/delogement.png)
+![image](/img/delogement_h.png)
 
 On peut voir que le processus "get_cpu_number" à changé plusieurs fois de CPU.
 
@@ -58,4 +58,6 @@ On peut voir que le processus "get_cpu_number" à changé plusieurs fois de CPU.
 
 nice -n 5 ./cpu_loop & ./cpu_loop
 
--n 5 fait moins d'opération car la priorité est plus basse que 
+les priorités vont de -20 a 19 sachant que -20 est la plus prioritaire. Donc si on lance plusieurs processus en même temps, celui avec la priorité la plus haute a plus d'itération. On peut aussi remarquer que si on utilise nice et mettant une haute priorité au processus permetttant de deloger get_cpu_number, il se deloge immédiatement.
+
+## Codage
