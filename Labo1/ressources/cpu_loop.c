@@ -14,7 +14,7 @@ int main(void)
 		++nb_iterations;
 	}
 
-	printf("Nombre d'iteration par seconde = %llu (%d)\n", (nb_iterations/n_sec), getpid());
+	printf("Nombre d'iteration par seconde = %llu (%d)\n", (nb_iterations/n_sec)/1000000, getpid());
 
     return EXIT_SUCCESS;
 }
