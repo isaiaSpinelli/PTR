@@ -10,18 +10,43 @@
 /* Barrier variable */
 pthread_barrier_t barr;
 
+// Structure pour chaque thread
+struct threadInfo {
+   long int nb_iterations;
+   int prio_value ;
+};
+
+// Nombre total d'iteration
+unsigned long long total_iterations = 0;
+
 
 void *f_thread(void *arg)
 {
+	//int err = 0;
+	long int nb_iterations = 0;
+	
+	struct threadInfo* threadInfo1 = (struct threadInfo*)arg;  
+	//pthread_t thId = pthread_self();
+	
+	pthread_barrier_wait(&barr);
+	
+	fprintf(stdout, "Priorite = %d \n", threadInfo1->prio_value  );
+	
+	// met la priorites du threads
+	/*if ( (err = pthread_setschedprio(thId, 10threadInfo1->prio_value)) != 0) {
+		fprintf(stderr, "Could not set priorities (%d)\n", err );
+		return NULL;
+	}*/
+	
 	time_t start_time = time(NULL);
-
-	unsigned long long nb_iterations = 0;
 	while(time(NULL) < (start_time + EXECUTION_TIME)) {
 		++nb_iterations;
 	}
 	
-	*((long int*)arg) = nb_iterations;
-	
+	// met a jour les resultats
+	threadInfo1->nb_iterations = nb_iterations;
+	total_iterations += nb_iterations;
+	// Libere la barriere
 	pthread_barrier_wait(&barr);
 	
 	return EXIT_SUCCESS;
@@ -30,10 +55,9 @@ void *f_thread(void *arg)
 int main(int argc, char **argv)
 {
 	int nb_threads = 0;
-	
-	unsigned long long total_iterations = 0;
 	int min_prio,max_prio;
 	int i,j;
+	int err = 0;
 	
 	
 	/* Parse input */
@@ -49,48 +73,59 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 	
-	long int nb_iterations[nb_threads];
-	unsigned int prio_value[nb_threads];
+	
 	pthread_t thread_id[nb_threads];
+	struct threadInfo threadInfoTab[nb_threads];
 	
 	/* Get minimal and maximal priority values */
 	min_prio = sched_get_priority_min(SCHED_FIFO);
-	max_prio = sched_get_priority_max(SCHED_FIFO);
-	printf("min = %d - max = %d", min_prio, max_prio );
+	max_prio = sched_get_priority_max(SCHED_FIFO); // SCHED_FIFO
+	fprintf(stdout, "min = %d - max = %d\n",
+		min_prio,
+		max_prio);
+		
 	max_prio -= min_prio;
-	printf("min = %d - max = %d", min_prio, max_prio );
 	
 	/* Initialize barrier */
-	if (pthread_barrier_init(&barr, NULL, nb_threads)) {
+	if (pthread_barrier_init(&barr, NULL, nb_threads+1)) {
 		fprintf(stderr, "Could not initialize barrier!\n");
 		return EXIT_FAILURE;
 	}
 	
 	/* Set priorities and create threads */
 	for (j = 0; j < nb_threads; ++j) {
-		// calcul la 1er priorite
-		prio_value[j] = min_prio + (j * (max_prio/nb_threads));
+		// calcul les priorites
+		// min_prio + (j * (max_prio/nb_threads));
+		threadInfoTab[j].prio_value = min_prio + (j * (max_prio/(nb_threads-1)));
 		
 		// cree les threads
-		if ( pthread_create(&thread_id[j], NULL, f_thread, (void*)nb_iterations[j]) == 0) {
-			fprintf(stderr, "Could not set priorities\n");
+		if ( (err = pthread_create(&thread_id[j], NULL, f_thread, (void*)&threadInfoTab[j])) != 0) {
+			fprintf(stderr, "Could not create threads (%d)\n", err );
 			return EXIT_FAILURE;
 		}
+		
 		// met les priorites des threads
-		if ( pthread_setschedprio(thread_id[j], prio_value[j]) == 0) {
-			fprintf(stderr, "Could not set priorities\n");
-			return EXIT_FAILURE;
+		if ( (err = pthread_setschedprio(thread_id[j], 0)) != 0) {
+			fprintf(stderr, "Could not set priorities (%d)\n", err );
+			//return EXIT_FAILURE;
 		}
 	}
 	
+	pthread_barrier_wait(&barr);
+	
+	fprintf(stdout, "Tous ready\n" );
+	
+	pthread_barrier_init(&barr, NULL, nb_threads+1);
+	
+	
 	/* Wait for the threads to complete and set the results */
-	// int pthread_barrier_wait(pthread_barrier_t *barrier);
+	pthread_barrier_wait(&barr);
 	
-	
+	// affiche les resultats
 	for (i = 0; i < nb_threads; ++i) {
 		fprintf(stdout, "[%02d] %ld (%2.0f%%)\n",
-		prio_value[i], nb_iterations[i],
-		100.0 * nb_iterations[i] / total_iterations);
+		threadInfoTab[i].prio_value, threadInfoTab[i].nb_iterations,
+		100.0 * threadInfoTab[i].nb_iterations / total_iterations);
 	}
 	return EXIT_SUCCESS;
 }
