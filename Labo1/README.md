@@ -61,3 +61,9 @@ nice -n 5 ./cpu_loop & ./cpu_loop
 les priorités vont de -20 a 19 sachant que -20 est la plus prioritaire. Donc si on lance plusieurs processus en même temps, celui avec la priorité la plus haute a plus d'itération. On peut aussi remarquer que si on utilise nice et mettant une haute priorité au processus permetttant de deloger get_cpu_number, il se deloge immédiatement.
 
 ## Codage
+Malheureusement, après avoir essayé plusieurs methodes afin de modifier les prioritées des threads, je n'ai pas réussis. Donc, je n'ai pas pu avoir les résultats souhaités.
+
+![image](/img/priority_1.png)
+![image](/img/priority_2.png)
+
+Je pense que la différence entre niceness et priorités et que la niceness est un paramètre gérer dans le côté utilisateur alors que les priorités sont dans le kernel.
