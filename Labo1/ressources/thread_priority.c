@@ -5,10 +5,12 @@
 #include <unistd.h>
 #include <inttypes.h>
 
-#define EXECUTION_TIME 10 /* In seconds */
+#define EXECUTION_TIME 5 /* In seconds */
 
 /* Barrier variable */
 pthread_barrier_t barr;
+
+time_t start_time ;
 
 // Structure pour chaque thread
 struct threadInfo {
@@ -36,7 +38,7 @@ void *f_thread(void *arg)
 		return NULL;
 	}
 	// essaie de modifier la priorite
-	param.sched_priority = threadInfo1->prio_value;
+	param.sched_priority = 2;
 	fprintf(stdout, "set priority = %d\n", threadInfo1->prio_value );
 	if ( (ret = pthread_setschedparam(pthread_self(), SCHED_FIFO, &param)) != 0) {
 		fprintf(stderr, "Could not set schedparam (%d)\n", ret);
@@ -44,14 +46,14 @@ void *f_thread(void *arg)
 	}
 	
 	// met les priorites des threads
-	if ( (ret = pthread_setschedprio(pthread_self(), threadInfo1->prio_value)) != 0) {
+	if ( (ret = pthread_setschedprio(pthread_self(), 2)) != 0) {
 		fprintf(stderr, "Could not set priorities (%d) (P=%d)\n", ret, threadInfo1->prio_value);
 		//return EXIT_FAILURE;
 	}
 	// attend les autres threads
 	pthread_barrier_wait(&barr);
 	// compte les iterations
-	time_t start_time = time(NULL);
+	
 	while(time(NULL) < (start_time + EXECUTION_TIME)) {
 		++nb_iterations;
 	}
@@ -59,7 +61,7 @@ void *f_thread(void *arg)
 	// met a jour le resultat
 	threadInfo1->nb_iterations = nb_iterations;
 	// Libere la barriere
-	pthread_barrier_wait(&barr);
+	//pthread_barrier_wait(&barr);
 	
 	return EXIT_SUCCESS;
 }
@@ -68,7 +70,7 @@ int main(int argc, char **argv)
 {
 	int nb_threads = 0;
 	int min_prio,max_prio;
-	int i,j;
+	int i,j,k;
 	int err = 0;
 
 	// Test de modifier les param des threads crees
@@ -133,7 +135,7 @@ int main(int argc, char **argv)
 		int denominateur = (nb_threads-1) == 0 ? 1 : (nb_threads-1);
 		threadInfoTab[j].prio_value = min_prio + (j * (max_prio/(denominateur)));
 		
-		param.sched_priority = threadInfoTab[j].prio_value;
+		param.sched_priority = j*4;// threadInfoTab[j].prio_value;
 		pthread_attr_setschedparam (&attr, &param);
 		
 		// cree les threads
@@ -149,14 +151,20 @@ int main(int argc, char **argv)
 		}*/
 	}
 	
+	start_time = time(NULL);
 	pthread_barrier_wait(&barr);
 	fprintf(stdout, "Tous ready\n" );
 	
+	for ( k=0; k < nb_threads; ++k) {
+		pthread_join( thread_id[k], NULL );
+	}
+	
+	/*
 	pthread_barrier_init(&barr, NULL, nb_threads+1);
 	
-	/* Wait for the threads to complete and set the results */
 	pthread_barrier_wait(&barr);
 	fprintf(stdout, "Tous fini\n" );
+	*/
 	
 	// compte les iteration totals
 	for (i = 0; i < nb_threads; ++i) {

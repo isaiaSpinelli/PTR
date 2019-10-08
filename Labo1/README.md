@@ -66,4 +66,7 @@ Malheureusement, après avoir essayé plusieurs methodes afin de modifier les pr
 ![image](/img/priority_1.png)
 ![image](/img/priority_2.png)
 
-Je pense que la différence entre niceness et priorités et que la niceness est un paramètre gérer dans le côté utilisateur alors que les priorités sont dans le kernel.
+Je pense que la différence entre niceness et priorités et que la niceness est un paramètre gérer dans le côté utilisateur alors que les priorités sont dans le kernel. 
+
+Finalement, les priorités sont bien plus stricte que la nicness. elle laisse aucune chance aux autre si elle est plus elevée.
+
