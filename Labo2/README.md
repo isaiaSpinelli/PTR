@@ -38,6 +38,8 @@ Il nous est demandé d'écrire un programme qui prend en entrée le nombre de me
 
 le code est en annexe. (timer.c)
 
+Remarque : Pour que la programme compile il a fallu utiliser "-lrt" afin qu'il connaise les fonctions "timer_create" et "timer_settime"
+
 ## Mesures
 
 ## Perturbations
