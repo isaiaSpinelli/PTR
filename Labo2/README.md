@@ -1,10 +1,14 @@
 # PTR Laboratoire 2
 
+Spinelli Isaia
+
+le 16 Octobre 2019
+
 ## Gettimeofday et Gettimeofday2
 
-3-4 On comparant les resultats de gettimeofday et gettimeofday2, On peut voir que le 2eme récupère des différence de temps plus faible. Ce qui est normal car il "perd" pas de temps à afficher entre chaque capture les resultats.
+3. On comparant les resultats de gettimeofday et gettimeofday2, On peut voir que le 2ème récupère des différences de temps plus faible. Ce qui est normal car il "perd" pas de temps à afficher entre chaque capture des resultats.
 
-5. Etant donné que le fonction gettimeofday() manipule des structures avec des secondes et des microsecondes, on peut facilement imaginer que la précision tourne autour de la microsecondes et pas moins.
+5. Etant donné que le fonction gettimeofday() manipule des structures avec des secondes et des microsecondes, on peut facilement imaginer que la précision tourne autour de la microsecondes (1us).
 
 En annexe, le code dans "gettimeofday2.c"  
 
@@ -23,10 +27,10 @@ Remarque : CLOCK_REALTIME_HR et CLOCK_MONOTONIC_HR ne compile plus.
 sigaction (SIGALRM, &sa, NULL); =>
 Premièrement, il va indiquer que lorsque le signal SIGALRM sera reçu, il faudra executer le fonction donnée (timer_handler).
 
-Ensuite, il initialise la structure timer de type struct itimerval qui permet de définir un temps de début et un temps d'interval.
+Ensuite, il initialise la structure timer de type struct itimerval qui permet de définir un temps de début et un temps d'intervalle.
 
 setitimer (ITIMER_REAL, &timer, NULL); =>
-Finalement, il va mettre en place un "minuteur" en fonction de la structure initialisée plutot. Ce minuteur enverra en fonction du type de la clock choisis un signal qui sera le même utilisé plus tot (SIGALRM) qui déclenchera donc la fonction prédéfinie.
+Finalement, il va mettre en place un "minuteur" en fonction de la structure initialisée plutôt. Ce minuteur enverra en fonction du type de la clock choisis un signal qui sera le même utilisé plus tôt (SIGALRM) qui déclenchera donc la fonction prédéfinie.
 
 En bref, après 250ms, ce logiciel appel la fonction souhaitée toutes les 250 ms.
 
@@ -38,40 +42,40 @@ Il nous est demandé d'écrire un programme qui prend en entrée le nombre de me
 
 le code est en annexe. (timer.c)
 
-Remarque : Pour que la programme compile il a fallu utiliser "-lrt" afin qu'il connaise les fonctions "timer_create" et "timer_settime"
+Remarque : Pour que la programme compile il a fallu utiliser "-lrt" afin qu'il connaisse les fonctions "timer_create" et "timer_settime"
 
 ## Mesures
 
-résultat pour un intervalle de 500 us :
+Résultat pour une intervalle de 500 us :
 
 ![image](/img/res_500.png)
 ![image](/img/octave_500.png)
 
-résultat pour un intervalle de 1000 us :
+Résultat pour une intervalle de 1000 us :
 ![image](/img/res_1000.png)
 ![image](/img/octave_1000.png)
 
-résultat pour un intervalle de 250 us :
+Résultat pour une intervalle de 250 us :
 ![image](/img/res_250.png)
 ![image](/img/octave_250.png)
 
-Test pour 1000 mesures avec un interval de 1ms 2 fois de suite:
+Test pour 1000 mesures avec une intervalle de 1ms 2 fois de suite:
 ![image](/img/res_1000_2foi.png)
 
 
 Remarque :
 
-On peut constater que la moyenne est généralement assez précise. Par contre, la variance et le standard deviation n'est pas du tout régulier. Il peut vite y avoir des pics (entre 200 - 1200 environ).
+On peut constater que la moyenne est généralement assez précise. Par contre, la variance et le standard deviation n'est pas trop régulier. Il peut vite y avoir des pics (entre 200 - 1200 environ).
 
 ## Perturbations
 
-Pour cette étape, j'ai surtout regardé le standard deviation afin de voir facilement la perturbation qui pourrait être causer.
+Pour cette étape, j'ai surtout regardé le standard deviation afin de voir facilement les perturbations qui pourraient être causées.
 
-### nice
+### niceness
 
-nice plusieurs coeurs :
+nice avec plusieurs coeurs :
 ![image](/img/res_1000_nice.png)
-nice un coeur :
+nice à un coeur :
 ![image](/img/res_1000_nice_1c.png)
 
 Nous pouvons voir les résultats une fois avec une niceness de -18 et une autre avec 18 ou 19. On peut remarquer qu'il n'y a pas de différence sur un coeur ou plusieurs.
@@ -81,7 +85,7 @@ nice + grep (1: avec grep - 2: sans grep) :
 
 Parcontre, en faisant une grosse opération, on peut voir la différence. La variance est plus élevé (1600) quand le grep tourne en même temps.
 
-Afin de confirmer la perturbation avec grep, j'ai fait deux mesures en laissant grep tourner derrière. Ici on peut clairement voir que le standard deviation monte jusqu'a 4000.
+Afin de confirmer la perturbation avec grep, j'ai fait deux mesures en laissant grep tourner derrière. Ici on peut clairement voir que le standard deviation monte jusqu'à 4000.
 (1 et 2: avec grep)
 ![image](/img/res_1000_nice_Grep_confirmatio.png)
 
@@ -92,12 +96,12 @@ Je pense que le processus grep tourne sur tous les coeurs mais que parfois, il u
 Plusieurs coeurs :
 ![image](/img/res_1000_cpu_loop.png)
 
-Biensûr, on ne voit pas de différence car on a plusieurs coeurs. Par contre, voici deux mesures avec un coeur
+Biensûr, on ne voit pas de différence car on a plusieurs coeurs. Par contre, voici ci-dessous deux mesures avec un coeur.
 
 Un coeur :
 ![image](/img/res_1000_cpu_loop_1c.png)
 
-On peut voir que les résultats sont complétement à la masse. Ce qui est normal car le processus cpu_loop prend beaucoup de temps processeur. En effet, comme ils travaillent sur le même coeur, il peut arriver que le timer se fasse pré-empter à des moments critiques.
+On peut voir que les résultats sont complétement à la masse. Ce qui est normal car le processus cpu_loop prend beaucoup de temps processeur. En effet, comme ils travaillent sur le même coeur, il arrive que le timer se fasse pré-empter à des moments critiques.
 
 ### Ping
 
@@ -107,4 +111,4 @@ On peut voir que la variance est comme d'habitude, elle peut varier mais rien de
 
 ## Conclusion
 
-Afin de perturber notre timer, il faut prendre beaucoup de temps CPU sur le même coeur où le timer tourne. 
+Afin de perturber notre timer, il faut prendre beaucoup de temps CPU sur le même coeur où le timer tourne. Sinon, on peut voir que le timer est en moyenne précis avec une moyenne qui s'écarte de 2 ou 3 ns du temps souhaité.
