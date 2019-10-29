@@ -1,0 +1,8 @@
+## compiler
+
+gcc -o Name -Wall Name.c  (-lrt) 
+
+arm-linux-gnueabihf-gcc Etape2.c -o Etape2 -Wall (-pthread)
+
+# perturbation
+sudo /usr/lib/xenomai/testsuite/dohell -b /home/redsuser/timer_1000_500 -s 10.192.22.217 -m /home/redsuser/YYY/ 70 | /home/redsuser/summary 
