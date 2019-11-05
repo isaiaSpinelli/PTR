@@ -5,107 +5,94 @@
 #include <inttypes.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
-#include <time.h>
 
 #include <rtdk.h>
 #include <native/task.h>
 #include <native/timer.h>
 #include <sys/mman.h>
 
+// Référence : https://xenomai.org/documentation/xenomai-2.4/html/api/trivial-periodic_8c-example.html
 
-
-// macro afin d'afficher une erreur
-#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
-                               } while (0)
-
-// variable global
-int count = 0;
-
-// calcul la difference entre les occurences
-void timespec_diff(struct timespec *start, struct timespec *stop,
-                   struct timespec *result);
+// Descripteur de tâche
+RT_TASK timer_task;
  
 // Handler des signaux recus
-void handler_signal (int signum)
+void handler_signal (void *arg)
 {
-	static struct timespec old,new;
-	struct timespec res;
+	int nb_mesure = 10;
+	int count = 0;
+	RTIME now, previous;
 	
-	// met a jour les temps	
-	old = new;
-	if( clock_gettime( CLOCK_REALTIME , &new) == -1 )
-		errExit("clock_gettime");
-	// calcul la diff
-	timespec_diff(&old,&new,&res);
-	
-	// si c'est la 1er occurence
-	if (count == 0)
-		++count;
-	else {
-		printf ("%ld \n", res.tv_nsec);
-		count++;
-		//printf ("%d : %ld.%09ld \n", count++, res.tv_sec, res.tv_nsec);
+	/*
+	 * Arguments: &task (NULL=self),
+	 *            start time,
+	 *            period (here: 500 us)
+	 */
+	 // cree la tache periodique de 500 us
+	rt_task_set_periodic(NULL, TM_NOW, 100);
+	// init le temps 
+	previous = rt_timer_read();
+
+	while (count++ <= nb_mesure) {
+		// attend la fin du compteur
+		rt_task_wait_period(NULL);
+		// Met a jour les temps
+		previous = now;
+		now = rt_timer_read();
+
+		/*
+		 * NOTE: printf may have unexpected impact on the timing of
+		 *       your program. It is used here in the critical loop
+		 *       only for demonstration purposes.
+		 */
+		/*printf("%ld.%06ld ms\n",
+			   (long)(now - previous) / 1000000,
+			   (long)(now - previous) % 1000000);*/
+		
+		// si c'est la 1er occurence
+		if (count != 1) {
+			rt_printf("%ld\n", (long)(now - previous));
+		}
+			 
+		
+		
+		// Affiche le temps
+		//printf("%ld\n", (long)(now - previous));		   
+		   
 	}
 		
-		
+
 	
 }
 
 int main(int argc, char **argv)
 {
 	
-	unsigned long long nsec = 0;
+	// Verouille l'espace d'adressage du processus pour éviter qu'elles ne soient paginées
+	// Evite les échanges de mémoire pour ce programme
+	if ( mlockall(MCL_CURRENT|MCL_FUTURE) != 0 ){
+		fprintf(stderr, "Erreur mlockall\n");
+		return EXIT_FAILURE;
+	}
 	
-	struct itimerspec spec;
-	struct sigevent event;
-	timer_t timer;
-	int nb_mesure = 0;
-	long temps_us = 0;
-
+	// Permet d'utiliser le rt_printf
+	rt_print_auto_init(1);
 	
-	nb_mesure = 1000;
-	temps_us = 500;
+	/*
+	 * Arguments: &task,
+	 *            name,
+	 *            stack size (0=default),
+	 *            priority,
+	 *            mode (FPU, start suspended, ...)
+	 */
+	rt_task_create(&timer_task, "TimerXenomai", 0, 99, 0);
 	
-	// Configure le timer
-	if ( signal(SIGRTMIN, handler_signal) == SIG_ERR ) 
-		errExit("signal");
-		
-		
-	event.sigev_notify = SIGEV_SIGNAL;
-	event.sigev_signo = SIGRTMIN;
-	nsec = temps_us * 1000; // en nanosec
-	spec.it_interval.tv_sec = nsec / 1000000000;
-	spec.it_interval.tv_nsec = nsec % 1000000000;
-	spec.it_value = spec.it_interval;
-
-	// Alloue le timer
-	if ( timer_create(CLOCK_REALTIME, &event, &timer) != 0)
-		errExit("timer_create");
-	
-	// Programme le timer
-	if ( timer_settime(timer, 0, &spec, NULL) != 0 ) 
-		errExit("timer_settime");
-	
-
-	/* Do busy work. */
-	while (count < nb_mesure+1);
+	// Start la tache
+	rt_task_start(&timer_task, &handler_signal, NULL);
+	// Attend la tache
+	rt_task_join(&timer_task);
+	// Supprime la tache
+	rt_task_delete(&timer_task);
 	
 	return EXIT_SUCCESS;
-}
-
-// calcul la difference entre les occurences
-// source : https://gist.github.com/diabloneo/9619917
-void timespec_diff(struct timespec *start, struct timespec *stop,
-                   struct timespec *result)
-{
-    if ((stop->tv_nsec - start->tv_nsec) < 0) {
-        result->tv_sec = stop->tv_sec - start->tv_sec - 1;
-        result->tv_nsec = stop->tv_nsec - start->tv_nsec + 1000000000;
-    } else {
-        result->tv_sec = stop->tv_sec - start->tv_sec;
-        result->tv_nsec = stop->tv_nsec - start->tv_nsec;
-    }
-
-    return;
 }

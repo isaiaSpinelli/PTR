@@ -9,6 +9,6 @@ taskset -pc 0 $$
 
 mkdir /home/redsuser/YYY/
 
-sudo /usr/lib/xenomai/testsuite/dohell -b /home/redsuser/cpu_loop -s 10.192.XXX.XXX -m /home/redsuser/YYY 70
+sudo /usr/lib/xenomai/testsuite/dohell -b /home/redsuser/cpu_loop -s 10.192.22.208 -m /home/redsuser/YYY 70
 
 sudo /usr/lib/xenomai/testsuite/dohell -b /home/redsuser/timer_1000_500 -s 10.192.22.217 -m /home/redsuser/YYY/ 70 | /home/redsuser/summary 
