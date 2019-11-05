@@ -80,6 +80,7 @@ int main(int argc, char **argv)
 	pthread_t threadHautePriorite;
 
 	// Modifie les param du thread crees
+	struct sched_param param;
 	pthread_attr_t attr;
 	
 	pthread_attr_init (&attr);
@@ -100,6 +101,9 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Could not set schedpolicy (%d)\n", err );
 		return EXIT_FAILURE;
 	}
+	
+	param.sched_priority = 19;// threadInfoTab[j].prio_value;
+	pthread_attr_setschedparam (&attr, &param);
 	
 	printf("2\n");
 	
