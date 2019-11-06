@@ -56,10 +56,26 @@ int main(int argc, char **argv)
 	timer_t timer;
 	int nb_mesure = 0;
 	long temps_us = 0;
-
 	
-	nb_mesure = 1000;
-	temps_us = 500;
+	
+	/* Parse input */
+	if (argc != 3) {
+		fprintf(stderr, "Usage: %s NB_MESURE TEMPS_US\n", argv[0]);
+		return EXIT_FAILURE;
+	}
+	
+	nb_mesure = strtoimax(argv[1], (char **)NULL, 10);
+	temps_us  = strtoimax(argv[2], (char **)NULL, 10);
+	
+	if (nb_mesure <= 0) {
+		fprintf(stderr, "NB_MESURE must be > 0 (actual: %d)\n", nb_mesure);
+		return EXIT_FAILURE;
+	}
+	
+	if (temps_us <= 0) {
+		fprintf(stderr, "TEMPS_US must be > 0 (actual: %ld)\n", temps_us);
+		return EXIT_FAILURE;
+	}
 	
 	// Configure le timer
 	if ( signal(SIGRTMIN, handler_signal) == SIG_ERR ) 
