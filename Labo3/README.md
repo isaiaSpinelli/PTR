@@ -3,7 +3,7 @@
 
 Spinelli Isaia
 
-le 05 Novembre 2019
+le 09 Novembre 2019
 
 
 
@@ -96,6 +96,8 @@ De plus, la variance reste relativement faible pour un temps de 500us.
 
 Tous les codes sont en annexe et commentés.
 
+Remarque: Malheureusement je n'ai pas mis d'histogramme car je trouve que ceux fourni par octave n'était pertinent dû au fait de la qualité du graphe.
 
 
-Pour conclure, je dirais que le timer reste un peu mieux qu'un simple appelé à une fonction nanosleep() mais cela dit, le timer reste très long des performances que l'interface de Xenomai propose.
+## Conclusion
+Le timer reste un peu mieux qu'un simple appelle à une fonction nanosleep() mais cela dit, le timer reste très loin des performances que l'interface de Xenomai propose. On constate que le temps réel fait une grosse différence de précision.

@@ -51,7 +51,6 @@ void demo(void *arg)
 			previous = now;
         }
         
-        exit(0);
 }
 
 int main(int argc, char* argv[])
@@ -70,8 +69,8 @@ int main(int argc, char* argv[])
          *            priority,
          *            mode (FPU, start suspended, ...)
          */
-         // Crée la tache
-        if ( rt_task_create(&demo_task, "TimerXenomai", 0, 99, 0) != 0 ){
+         // Crée la tache joignable
+        if ( rt_task_create(&demo_task, "TimerXenomai", 0, 99, T_JOINABLE ) != 0 ){
 			fprintf(stderr, "Erreur rt_task_create\n");
 			return -1;
 		}
@@ -86,10 +85,11 @@ int main(int argc, char* argv[])
 			fprintf(stderr, "Erreur rt_task_start\n");
 			return -1;
 		}
-        
-        pause();
-        
-        rt_task_join(&demo_task);
+		// Attend la tache
+         if ( rt_task_join(&demo_task) != 0 ){
+			fprintf(stderr, "Erreur rt_task_join\n");
+			return -1;
+		}
         
         // Supprime la tache
         if ( rt_task_delete(&demo_task) != 0 ){
