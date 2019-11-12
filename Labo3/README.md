@@ -68,7 +68,7 @@ Remarque : la commande sudo est importante afin de pouvoir changer la priorité 
 Pour commencer, voici les résultats sans perturbation :
 ![image](./img/E2_sansperturabation.png)
 
-On peut voir que la variance est énorme et que la moyenne n'est pas précise. Donc de base on peut constater que le nanosleep est moins précis qu'un timer ce qui semble correcte.
+On peut voir que la variance est énorme et que la moyenne n'est pas précise. Donc de base on peut constater que le nanosleep() est moins précis qu'un timer ce qui semble correcte.
 
 Ensuite, voici les résultats avec perturbations :
 
@@ -94,9 +94,13 @@ On peut voir ici les résultats avec perturbations :
 La moyenne est extrêmement précise ! On voit que le temps réel est un autre monde que le non temps réel.
 De plus, la variance reste relativement faible pour un temps de 500us.
 
+
+
+Remarque:
+
 Tous les codes sont en annexe et commentés.
 
-Remarque: Malheureusement je n'ai pas mis d'histogramme car je trouve que ceux fourni par octave n'était pertinent dû au fait de la qualité du graphe.
+Malheureusement je n'ai pas mis d'histogramme car je trouve que ceux fourni par octave n'était pertinent dû au fait de la qualité du graphe.
 
 
 ## Conclusion
