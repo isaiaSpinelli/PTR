@@ -10,6 +10,13 @@
 * de détecter une surcharge du processeur. Si tel est le cas, une fonction
 * fournie par le développeur est appelée. Elle devrait suspendre ou détruire
 * les tâches courantes, afin de redonner la main à l'OS.
+* 
+* Solution génnérale :
+* Le canari s'execute deux fois plus souvent que le watchdog. 
+* Le canarai incrémente une variable. Cette variable sera checkée dans le watchdog, 
+* si la valeur est la même que la dernière vérification, 
+* cela signifie que le canarai n'a pas pu l'incrémenter. 
+* Donc on stop les tâches courantes.
 *
 * Code Xenomai 3.1
 *
@@ -23,22 +30,22 @@
 #include "general.h"
 
 /**< Période des différentes taches en MS */
-#define PERIOD_TASK_CANARI 			1000        		/**< Période de la tâche du canari */
-#define PERIOD_TASK_WATCHDOG    	1000         	/**< Période de la tâche du watchdog */
+#define PERIOD_TASK_CANARI 			1000        		/**< Période de la tâche du canari 1000 */
+#define PERIOD_TASK_WATCHDOG    	2000         	/**< Période de la tâche du watchdog   1000 */
 
 /**< Priorité des tâches :  1=faible, 99=forte */
 #define PRIO_TASK_CANARI         	1    		/**< Priorité de la tâche du canari */
 #define PRIO_TASK_WATCHDOG       	99    		/**< Priorité de la tâche du watchdog */
 
 RT_TASK canariTask;  	/**< Descripteur de la tâche canari */
-RT_TASK watchdogTask;  	/**< Descripteur de la tâche watchdog */
-
-unsigned long countCanari = 0;
+extern RT_TASK watchdogTask;  	/**< Descripteur de la tâche watchdog visible pour intro_watchdog pour check sa priorité*/
+ 
+unsigned long countCanari = 0; /**< Variable globale que le canara incrémente */
 
 void(*watchdog_suspend_function)(void) = NULL; /**< Fonction appelée lors d'une surcharge */
 
 
-/** \brief Tâche périodique de très basse priorité et de période inférieur au watchdog signale son activité à chaque période.
+/** \brief Tâche périodique de très basse priorité et de période inférieure au watchdog signale son activité à chaque période.
 *
 * 
 * \param cookie Non utilisé
@@ -55,12 +62,10 @@ void canari(void *cookie) {
 
   rt_printf("Starting periodic task canari\n", TM_NOW);
 
-  
+  /* Indique que le canari est actif à chaque période */
   while (1) {
 
-    /* Indique que le canari est actif à chaque période */
     rt_printf(" ************************ CANARI EXECUTION %lu ************************\n", countCanari++);
-
     rt_task_wait_period(NULL);
   }
 
@@ -84,7 +89,9 @@ void watchdog(void *cookie) {
 
 	rt_printf("Starting periodic task watchdog\n", TM_NOW);
 
-
+	/*
+	 * Vérifie à chaque période si le canari est encore en vie
+	 */
 	while (1) {
 		
 		if (check == countCanari) {
@@ -92,10 +99,11 @@ void watchdog(void *cookie) {
 			watchdog_suspend_function();
 		}
 		check = countCanari;
-		/* Vérifie à chaque période si le canari est encore en vie */
+		
 		rt_printf("************************ CANARI ALIVE ************************\n");
 
 		rt_task_wait_period(NULL);
+
 	}
 
 }
@@ -145,7 +153,12 @@ int start_watchdog(void(* suspend_func)(void))
 */
 int end_watchdog(void)
 {
-
+	/* Destruction des objets dans l'ordre inverse de leur création
+	 * afin d'éviter tout problème de dépendance entre les objets 
+	 */
+	rt_task_delete(&watchdogTask);
+	rt_task_delete(&canariTask);
+	
   return 1;
 }
 

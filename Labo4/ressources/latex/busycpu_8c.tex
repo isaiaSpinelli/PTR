@@ -1,0 +1,84 @@
+\hypertarget{busycpu_8c}{\section{Référence du fichier busycpu.\-c}
+\label{busycpu_8c}\index{busycpu.\-c@{busycpu.\-c}}
+}
+
+
+Fonctions permettant la simulation de consommation de temps C\-P\-U.  
+
+
+{\ttfamily \#include $<$alchemy/task.\-h$>$}\\*
+{\ttfamily \#include $<$alchemy/alarm.\-h$>$}\\*
+{\ttfamily \#include $<$alchemy/timer.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}busycpu.\-h\char`\"{}}\\*
+Graphe des dépendances par inclusion de busycpu.\-c\-:
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{busycpu_8c_ab9e061e05d689a5769936b213022102f}{M\-S}~1000000
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{busycpu_8c_a3b276abfdbad9248e08d28e6b95920b9}{busy\-\_\-cpu} (int ms)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de simuler de l'utilisation de temps C\-P\-U. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Fonctions permettant la simulation de consommation de temps C\-P\-U. \begin{DoxyAuthor}{Auteur}
+Y. Thoma 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-3 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+08 novembre 2019
+\end{DoxyDate}
+La fonction \hyperlink{busycpu_8c_a3b276abfdbad9248e08d28e6b95920b9}{busy\-\_\-cpu()} permet de simuler du temps de traitement à l'aide d'une boucle. Cette version exploite la librairie rtlog pour permettre de visualiser l'évolution du système.
+
+Code Xenomai 3.\-1 
+
+Définition dans le fichier \hyperlink{busycpu_8c_source}{busycpu.\-c}.
+
+
+
+\subsection{Documentation des macros}
+\hypertarget{busycpu_8c_ab9e061e05d689a5769936b213022102f}{\index{busycpu.\-c@{busycpu.\-c}!M\-S@{M\-S}}
+\index{M\-S@{M\-S}!busycpu.c@{busycpu.\-c}}
+\subsubsection[{M\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-S~1000000}}\label{busycpu_8c_ab9e061e05d689a5769936b213022102f}
+1 ms exprimé en ns 
+
+Définition à la ligne 23 du fichier busycpu.\-c.
+
+
+
+Référencé par periodic\-Task1(), periodic\-Task2(), periodic\-Task3(), et watchdog().
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{busycpu_8c_a3b276abfdbad9248e08d28e6b95920b9}{\index{busycpu.\-c@{busycpu.\-c}!busy\-\_\-cpu@{busy\-\_\-cpu}}
+\index{busy\-\_\-cpu@{busy\-\_\-cpu}!busycpu.c@{busycpu.\-c}}
+\subsubsection[{busy\-\_\-cpu}]{\setlength{\rightskip}{0pt plus 5cm}void busy\-\_\-cpu (
+\begin{DoxyParamCaption}
+\item[{int}]{ms}
+\end{DoxyParamCaption}
+)}}\label{busycpu_8c_a3b276abfdbad9248e08d28e6b95920b9}
+
+
+Fonction permettant de simuler de l'utilisation de temps C\-P\-U. 
+
+Cette fonction peut être appelée par plusieurs tâches de manière concurrente. Chaque tâche consommera ensuite le temps C\-P\-U demandé.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em ms} & Nombre de millisecondes à consommer \\
+\hline
+\end{DoxyParams}
+
+
+Définition à la ligne 26 du fichier busycpu.\-c.
+
+
+
+Référencé par periodic\-Task1(), periodic\-Task2(), et periodic\-Task3().
+

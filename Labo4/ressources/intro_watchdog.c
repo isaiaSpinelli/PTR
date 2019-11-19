@@ -35,8 +35,8 @@
 #define PERIOD_TASK3       4000        /**< Période de la tâche 3 */
 
 #define CPU_TASK1          100          /**< Temps de traitement de la tâche 1 */
-#define CPU_TASK2          150         /**< Temps de traitement de la tâche 2 */
-#define CPU_TASK3          120         /**< Temps de traitement de la tâche 3 */
+#define CPU_TASK2          160         /**< Temps de traitement de la tâche 2 160 limite*/
+#define CPU_TASK3          100         /**< Temps de traitement de la tâche 3 */
 
 #define PRIO_TASK1         10    /**< Priorité de la tâche 1=faible, 99=forte */
 #define PRIO_TASK2         15    /**< Priorité de la tâche 1=faible, 99=forte */
@@ -50,23 +50,29 @@ int installed_task1 = 0; /**< Indique si la tâche 1 est chargée dans le module
 int installed_task2 = 0; /**< Indique si la tâche 2 est chargée dans le module */
 int installed_task3 = 0; /**< Indique si la tâche 3 est chargée dans le module */
 
+/**< Descripteur de la tâche watchdog afin de verifier sa priorité*/
+RT_TASK watchdogTask;  
+
 void cleanup_objects(void);
 
 void suspend(void)
 {
+	int err = 0;
+	
   //rt_printf("Suspending the tasks\n");
-  rt_printf("SUSPENS TACHE !!!!!!*********************************\n");
-  if (installed_task1) {
-    rt_printf("Deleting task 1\n");
-    rt_task_delete(&myTask1);
-    rt_printf("Deleting task 1 FIN %d\n", installed_task2);
-    installed_task1=0;
-  }
+  rt_printf("************************ Suspending the tasks *************************\n");
   if (installed_task2) {
     rt_printf("Deleting task 2\n");
-    rt_task_delete(&myTask2);
+    err = rt_task_delete(&myTask2);
     installed_task2=0;
   }
+  
+  if (installed_task1) {
+    rt_printf("Deleting task 1\n");
+    err = rt_task_delete(&myTask1);
+    installed_task1=0;
+  }
+  
   if (installed_task3) {
     rt_printf("Deleting task 3\n");
     rt_task_delete(&myTask3);
@@ -123,6 +129,7 @@ void periodicTask2(void *cookie) {
 
   /* Configuration de la tâche périodique */
   RTIME period = ((RTIME)PERIOD_TASK2)*((RTIME)MS);
+  RT_TASK_INFO infoWatchdog ;
   int err = rt_task_set_periodic(&myTask2, rt_timer_read() + period, period);
   if (err != 0) {
     printf("task set periodic failed: %s\n", strerror(-err));
@@ -135,6 +142,9 @@ void periodicTask2(void *cookie) {
 
     /* simulation traitement */
     rt_printf("Periodic task 2: starts execution\n");
+    /* Récupère et affiche la priorité du watchdog */
+	rt_task_inquire(&watchdogTask, &infoWatchdog ); 	
+	rt_printf("Priority Watchdog = %d \n", infoWatchdog.prio);
     busy_cpu(CPU_TASK2);
     rt_printf("Periodic task 2: end of execution\n");
 

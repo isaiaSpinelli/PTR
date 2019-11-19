@@ -1,0 +1,263 @@
+\hypertarget{watchdog_8c}{\section{Référence du fichier watchdog.\-c}
+\label{watchdog_8c}\index{watchdog.\-c@{watchdog.\-c}}
+}
+
+
+Fonctions permettant la mise en place d'un watchdog.  
+
+
+{\ttfamily \#include $<$alchemy/task.\-h$>$}\\*
+{\ttfamily \#include $<$alchemy/alarm.\-h$>$}\\*
+{\ttfamily \#include $<$alchemy/timer.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}watchdog.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}general.\-h\char`\"{}}\\*
+Graphe des dépendances par inclusion de watchdog.\-c\-:
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{watchdog_8c_a82b530fbaafb8667d9fefd7b6421bbad}{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}~1000
+\item 
+\#define \hyperlink{watchdog_8c_aeae017601623cac12746c6a963ce1afd}{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}~2000
+\item 
+\#define \hyperlink{watchdog_8c_a13d864763caf05973522df7742ea3435}{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}~1
+\item 
+\#define \hyperlink{watchdog_8c_ab4cca47e5a10575559c24e32ca2cc3fd}{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}~99
+\end{DoxyCompactItemize}
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{watchdog_8c_a0b032596c11e538d1584903bb65d6763}{canari} (void $\ast$cookie)
+\begin{DoxyCompactList}\small\item\em Tâche périodique de très basse priorité et de période inférieure au watchdog signale son activité à chaque période. \end{DoxyCompactList}\item 
+void \hyperlink{watchdog_8c_af61d555de681e3123f63de781cbcc363}{watchdog} (void $\ast$cookie)
+\begin{DoxyCompactList}\small\item\em Tâche périodique de très haute priorité et de période supérieur au canari vérifie à chaque période si le canari est encore en vie. \end{DoxyCompactList}\item 
+int \hyperlink{watchdog_8c_a43d4cb080f06759f94e2502653267943}{start\-\_\-watchdog} (void($\ast$suspend\-\_\-func)(void))
+\begin{DoxyCompactList}\small\item\em Démarre le watchdog. \end{DoxyCompactList}\item 
+int \hyperlink{watchdog_8c_a231bef0c019032cf16844f46efe9f4a7}{end\-\_\-watchdog} (void)
+\begin{DoxyCompactList}\small\item\em Termine les deux tâches du watchdog. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+R\-T\-\_\-\-T\-A\-S\-K \hyperlink{watchdog_8c_a9848e6504bb35fd7e14e08d69b58a09a}{canari\-Task}
+\item 
+R\-T\-\_\-\-T\-A\-S\-K \hyperlink{watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}{watchdog\-Task}
+\item 
+unsigned long \hyperlink{watchdog_8c_a31643fbcf95cc90a1dffe308b797f275}{count\-Canari} = 0
+\item 
+void($\ast$ \hyperlink{watchdog_8c_a3bf32302602896c442a15c13b3ee142d}{watchdog\-\_\-suspend\-\_\-function} )(void) = N\-U\-L\-L
+\end{DoxyCompactItemize}
+
+
+\subsection{Description détaillée}
+Fonctions permettant la mise en place d'un watchdog. \begin{DoxyAuthor}{Auteur}
+Y. Thoma \& D. Molla 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+08 novembre 2019
+\end{DoxyDate}
+Le watchdog proposé est implémenté à l'aide de 2 tâches responsables de détecter une surcharge du processeur. Si tel est le cas, une fonction fournie par le développeur est appelée. Elle devrait suspendre ou détruire les tâches courantes, afin de redonner la main à l'O\-S.
+
+Solution génnérale \-: Le canari s'execute deux fois plus souvent que le watchdog. Le canarai incrémente une variable. Cette variable sera checkée dans le watchdog, si la valeur est la même que la dernière vérification, cela signifie que le canarai n'a pas pu l'incrémenter. Donc on stop les tâches courantes.
+
+Code Xenomai 3.\-1 
+
+Définition dans le fichier \hyperlink{watchdog_8c_source}{watchdog.\-c}.
+
+
+
+\subsection{Documentation des macros}
+\hypertarget{watchdog_8c_a82b530fbaafb8667d9fefd7b6421bbad}{\index{watchdog.\-c@{watchdog.\-c}!P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I@{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}}
+\index{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I@{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I~1000}}\label{watchdog_8c_a82b530fbaafb8667d9fefd7b6421bbad}
+$<$ Période des différentes taches en M\-S Période de la tâche du canari 1000 
+
+Définition à la ligne 33 du fichier watchdog.\-c.
+
+\hypertarget{watchdog_8c_aeae017601623cac12746c6a963ce1afd}{\index{watchdog.\-c@{watchdog.\-c}!P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G@{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}}
+\index{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G@{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G~2000}}\label{watchdog_8c_aeae017601623cac12746c6a963ce1afd}
+Période de la tâche du watchdog 1000 Priorité des tâches \-: 1=faible, 99=forte 
+
+Définition à la ligne 34 du fichier watchdog.\-c.
+
+
+
+Référencé par watchdog().
+
+\hypertarget{watchdog_8c_a13d864763caf05973522df7742ea3435}{\index{watchdog.\-c@{watchdog.\-c}!P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I@{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}}
+\index{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I@{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I~1}}\label{watchdog_8c_a13d864763caf05973522df7742ea3435}
+Priorité de la tâche du canari 
+
+Définition à la ligne 37 du fichier watchdog.\-c.
+
+
+
+Référencé par start\-\_\-watchdog().
+
+\hypertarget{watchdog_8c_ab4cca47e5a10575559c24e32ca2cc3fd}{\index{watchdog.\-c@{watchdog.\-c}!P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G@{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}}
+\index{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G@{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G~99}}\label{watchdog_8c_ab4cca47e5a10575559c24e32ca2cc3fd}
+Priorité de la tâche du watchdog 
+
+Définition à la ligne 38 du fichier watchdog.\-c.
+
+
+
+Référencé par start\-\_\-watchdog().
+
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{watchdog_8c_a0b032596c11e538d1584903bb65d6763}{\index{watchdog.\-c@{watchdog.\-c}!canari@{canari}}
+\index{canari@{canari}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{canari}]{\setlength{\rightskip}{0pt plus 5cm}void canari (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{cookie}
+\end{DoxyParamCaption}
+)}}\label{watchdog_8c_a0b032596c11e538d1584903bb65d6763}
+
+
+Tâche périodique de très basse priorité et de période inférieure au watchdog signale son activité à chaque période. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em cookie} & Non utilisé \\
+\hline
+\end{DoxyParams}
+
+
+Définition à la ligne 53 du fichier watchdog.\-c.
+
+
+
+Référencé par start\-\_\-watchdog().
+
+\hypertarget{watchdog_8c_a231bef0c019032cf16844f46efe9f4a7}{\index{watchdog.\-c@{watchdog.\-c}!end\-\_\-watchdog@{end\-\_\-watchdog}}
+\index{end\-\_\-watchdog@{end\-\_\-watchdog}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{end\-\_\-watchdog}]{\setlength{\rightskip}{0pt plus 5cm}int end\-\_\-watchdog (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{watchdog_8c_a231bef0c019032cf16844f46efe9f4a7}
+
+
+Termine les deux tâches du watchdog. 
+
+Cette fonction doit être appelée par la fonction de cleanup du module afin de libérer les ressources allouées par le watchdog. En l'occurence, les deux tâches du watchdog sont supprimées. Elle peut aussi être appelée à n'importe quel instant pour supprimer la surveillance du watchdog. 
+
+Définition à la ligne 154 du fichier watchdog.\-c.
+
+
+
+Références canari\-Task, et watchdog\-Task.
+
+
+
+Référencé par cleanup\-\_\-objects().
+
+\hypertarget{watchdog_8c_a43d4cb080f06759f94e2502653267943}{\index{watchdog.\-c@{watchdog.\-c}!start\-\_\-watchdog@{start\-\_\-watchdog}}
+\index{start\-\_\-watchdog@{start\-\_\-watchdog}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{start\-\_\-watchdog}]{\setlength{\rightskip}{0pt plus 5cm}int start\-\_\-watchdog (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)(void)}]{suspend\-\_\-func}
+\end{DoxyParamCaption}
+)}}\label{watchdog_8c_a43d4cb080f06759f94e2502653267943}
+
+
+Démarre le watchdog. 
+
+Le watchdog lance deux tâches. Une tâche de faible priorité qui incrémente un compteur, et une de priorité maximale mais de période moindre qui vérifie que le compteur s'est incrémenté. Si tel n'est pas le cas, la fonction passée en paramètre est appelée. Elle devrait contenir du code responsable de suspendre ou supprimer les tâches courantes. 
+\begin{DoxyParams}{Paramètres}
+{\em suspend\-\_\-func} & Fonction appelée par le watchdog en cas de surcharge \\
+\hline
+\end{DoxyParams}
+
+
+Définition à la ligne 121 du fichier watchdog.\-c.
+
+
+
+Références canari(), canari\-Task, P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I, P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G, S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E, watchdog(), watchdog\-\_\-suspend\-\_\-function, et watchdog\-Task.
+
+
+
+Référencé par main().
+
+\hypertarget{watchdog_8c_af61d555de681e3123f63de781cbcc363}{\index{watchdog.\-c@{watchdog.\-c}!watchdog@{watchdog}}
+\index{watchdog@{watchdog}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{watchdog}]{\setlength{\rightskip}{0pt plus 5cm}void watchdog (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{cookie}
+\end{DoxyParamCaption}
+)}}\label{watchdog_8c_af61d555de681e3123f63de781cbcc363}
+
+
+Tâche périodique de très haute priorité et de période supérieur au canari vérifie à chaque période si le canari est encore en vie. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em cookie} & Non utilisé \\
+\hline
+\end{DoxyParams}
+
+
+Définition à la ligne 79 du fichier watchdog.\-c.
+
+
+
+Références count\-Canari, M\-S, P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G, watchdog\-\_\-suspend\-\_\-function, et watchdog\-Task.
+
+
+
+Référencé par start\-\_\-watchdog().
+
+
+
+\subsection{Documentation des variables}
+\hypertarget{watchdog_8c_a9848e6504bb35fd7e14e08d69b58a09a}{\index{watchdog.\-c@{watchdog.\-c}!canari\-Task@{canari\-Task}}
+\index{canari\-Task@{canari\-Task}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{canari\-Task}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K canari\-Task}}\label{watchdog_8c_a9848e6504bb35fd7e14e08d69b58a09a}
+Descripteur de la tâche canari 
+
+Définition à la ligne 40 du fichier watchdog.\-c.
+
+
+
+Référencé par end\-\_\-watchdog(), et start\-\_\-watchdog().
+
+\hypertarget{watchdog_8c_a31643fbcf95cc90a1dffe308b797f275}{\index{watchdog.\-c@{watchdog.\-c}!count\-Canari@{count\-Canari}}
+\index{count\-Canari@{count\-Canari}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{count\-Canari}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long count\-Canari = 0}}\label{watchdog_8c_a31643fbcf95cc90a1dffe308b797f275}
+Variable globale que le canara incrémente 
+
+Définition à la ligne 43 du fichier watchdog.\-c.
+
+
+
+Référencé par watchdog().
+
+\hypertarget{watchdog_8c_a3bf32302602896c442a15c13b3ee142d}{\index{watchdog.\-c@{watchdog.\-c}!watchdog\-\_\-suspend\-\_\-function@{watchdog\-\_\-suspend\-\_\-function}}
+\index{watchdog\-\_\-suspend\-\_\-function@{watchdog\-\_\-suspend\-\_\-function}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{watchdog\-\_\-suspend\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ watchdog\-\_\-suspend\-\_\-function)(void) = N\-U\-L\-L}}\label{watchdog_8c_a3bf32302602896c442a15c13b3ee142d}
+Fonction appelée lors d'une surcharge 
+
+Définition à la ligne 45 du fichier watchdog.\-c.
+
+
+
+Référencé par start\-\_\-watchdog(), et watchdog().
+
+\hypertarget{watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}{\index{watchdog.\-c@{watchdog.\-c}!watchdog\-Task@{watchdog\-Task}}
+\index{watchdog\-Task@{watchdog\-Task}!watchdog.c@{watchdog.\-c}}
+\subsubsection[{watchdog\-Task}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K watchdog\-Task}}\label{watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}
+Descripteur de la tâche watchdog visible pour intro\-\_\-watchdog pour check sa priorité 
+
+Définition à la ligne 54 du fichier intro\-\_\-watchdog.\-c.
+
+
+
+Référencé par end\-\_\-watchdog(), periodic\-Task2(), start\-\_\-watchdog(), et watchdog().
+

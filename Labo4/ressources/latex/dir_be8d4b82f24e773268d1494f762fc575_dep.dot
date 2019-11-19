@@ -1,0 +1,13 @@
+digraph "Labo4" {
+  compound=true
+  node [ fontsize="10", fontname="FreeSans"];
+  edge [ labelfontsize="10", labelfontname="FreeSans"];
+  subgraph clusterdir_48391cd78af529076c75545f6360df56 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="IsaiaSpinelli" fontname="FreeSans", fontsize="10", URL="dir_48391cd78af529076c75545f6360df56.html"]
+  subgraph clusterdir_be8d4b82f24e773268d1494f762fc575 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_be8d4b82f24e773268d1494f762fc575.html"];
+    dir_be8d4b82f24e773268d1494f762fc575 [shape=plaintext label="Labo4"];
+    dir_c6814a8a32561838891e42b9a4cebb10 [shape=box label="ressources" color="black" fillcolor="white" style="filled" URL="dir_c6814a8a32561838891e42b9a4cebb10.html"];
+  }
+  }
+}

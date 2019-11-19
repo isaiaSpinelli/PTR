@@ -16,11 +16,14 @@ sudo /usr/lib/xenomai/testsuite/dohell -b /home/redsuser/timer_1000_500 -s 10.19
 
 ## Ethernet DE1
 
+boot -> root
+
 # configure la bonne addresse IP à la **DE1**
 ifconfig eth0 192.168.1.3 netmask 255.255.255.0 up
+# Indique la librairie à la **DE1**
+export LD_LIBRARY_PATH=/usr/xenomai/lib
 
 # Transférer l’exécutable par ssh sur la De1-SoC  **PC**
 scp intro_watchdog root@192.168.1.3:/home/root
 
-# Indique la librairie à la **DE1**
-export LD_LIBRARY_PATH=/usr/xenomai/lib
+

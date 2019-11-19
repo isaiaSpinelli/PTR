@@ -1,0 +1,65 @@
+\hypertarget{watchdog_8h}{\section{Référence du fichier watchdog.\-h}
+\label{watchdog_8h}\index{watchdog.\-h@{watchdog.\-h}}
+}
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier \-:
+\subsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{watchdog_8h_a43d4cb080f06759f94e2502653267943}{start\-\_\-watchdog} (void($\ast$suspend\-\_\-func)(void))
+\begin{DoxyCompactList}\small\item\em Démarre le watchdog. \end{DoxyCompactList}\item 
+int \hyperlink{watchdog_8h_a231bef0c019032cf16844f46efe9f4a7}{end\-\_\-watchdog} (void)
+\begin{DoxyCompactList}\small\item\em Termine les deux tâches du watchdog. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Documentation des fonctions}
+\hypertarget{watchdog_8h_a231bef0c019032cf16844f46efe9f4a7}{\index{watchdog.\-h@{watchdog.\-h}!end\-\_\-watchdog@{end\-\_\-watchdog}}
+\index{end\-\_\-watchdog@{end\-\_\-watchdog}!watchdog.h@{watchdog.\-h}}
+\subsubsection[{end\-\_\-watchdog}]{\setlength{\rightskip}{0pt plus 5cm}int end\-\_\-watchdog (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{watchdog_8h_a231bef0c019032cf16844f46efe9f4a7}
+
+
+Termine les deux tâches du watchdog. 
+
+Cette fonction doit être appelée par la fonction de cleanup du module afin de libérer les ressources allouées par le watchdog. En l'occurence, les deux tâches du watchdog sont supprimées. Elle peut aussi être appelée à n'importe quel instant pour supprimer la surveillance du watchdog. 
+
+Définition à la ligne 154 du fichier watchdog.\-c.
+
+
+
+Références canari\-Task, et watchdog\-Task.
+
+
+
+Référencé par cleanup\-\_\-objects().
+
+\hypertarget{watchdog_8h_a43d4cb080f06759f94e2502653267943}{\index{watchdog.\-h@{watchdog.\-h}!start\-\_\-watchdog@{start\-\_\-watchdog}}
+\index{start\-\_\-watchdog@{start\-\_\-watchdog}!watchdog.h@{watchdog.\-h}}
+\subsubsection[{start\-\_\-watchdog}]{\setlength{\rightskip}{0pt plus 5cm}int start\-\_\-watchdog (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)(void)}]{suspend\-\_\-func}
+\end{DoxyParamCaption}
+)}}\label{watchdog_8h_a43d4cb080f06759f94e2502653267943}
+
+
+Démarre le watchdog. 
+
+Le watchdog lance deux tâches. Une tâche de faible priorité qui incrémente un compteur, et une de priorité maximale mais de période moindre qui vérifie que le compteur s'est incrémenté. Si tel n'est pas le cas, la fonction passée en paramètre est appelée. Elle devrait contenir du code responsable de suspendre ou supprimer les tâches courantes. 
+\begin{DoxyParams}{Paramètres}
+{\em suspend\-\_\-func} & Fonction appelée par le watchdog en cas de surcharge \\
+\hline
+\end{DoxyParams}
+
+
+Définition à la ligne 121 du fichier watchdog.\-c.
+
+
+
+Références canari(), canari\-Task, P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-C\-A\-N\-A\-R\-I, P\-R\-I\-O\-\_\-\-T\-A\-S\-K\-\_\-\-W\-A\-T\-C\-H\-D\-O\-G, S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E, watchdog(), watchdog\-\_\-suspend\-\_\-function, et watchdog\-Task.
+
+
+
+Référencé par main().
+

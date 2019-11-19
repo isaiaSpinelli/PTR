@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Ordonnancement: Référence du fichier watchdog.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Ordonnancement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6fa16f978620865338af57c72fd06fd2.html">cours_REDS</a></li><li class="navelem"><a class="el" href="dir_6cb35e5b62d7ed9ba9811bbe2d8c4ac1.html">PTR</a></li><li class="navelem"><a class="el" href="dir_48391cd78af529076c75545f6360df56.html">IsaiaSpinelli</a></li><li class="navelem"><a class="el" href="dir_be8d4b82f24e773268d1494f762fc575.html">Labo4</a></li><li class="navelem"><a class="el" href="dir_c6814a8a32561838891e42b9a4cebb10.html">ressources</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier watchdog.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Fonctions permettant la mise en place d'un watchdog.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;alchemy/task.h&gt;</code><br/>
+<code>#include &lt;alchemy/alarm.h&gt;</code><br/>
+<code>#include &lt;alchemy/timer.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="watchdog_8h_source.html">watchdog.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="general_8h_source.html">general.h</a>&quot;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de watchdog.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="watchdog_8c__incl.png" border="0" usemap="#watchdog_8c" alt=""/></div>
+<map name="watchdog_8c" id="watchdog_8c">
+</map>
+</div>
+</div>
+<p><a href="watchdog_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a82b530fbaafb8667d9fefd7b6421bbad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a82b530fbaafb8667d9fefd7b6421bbad">PERIOD_TASK_CANARI</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="separator:a82b530fbaafb8667d9fefd7b6421bbad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeae017601623cac12746c6a963ce1afd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#aeae017601623cac12746c6a963ce1afd">PERIOD_TASK_WATCHDOG</a>&#160;&#160;&#160;2000</td></tr>
+<tr class="separator:aeae017601623cac12746c6a963ce1afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13d864763caf05973522df7742ea3435"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a13d864763caf05973522df7742ea3435">PRIO_TASK_CANARI</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a13d864763caf05973522df7742ea3435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4cca47e5a10575559c24e32ca2cc3fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#ab4cca47e5a10575559c24e32ca2cc3fd">PRIO_TASK_WATCHDOG</a>&#160;&#160;&#160;99</td></tr>
+<tr class="separator:ab4cca47e5a10575559c24e32ca2cc3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a0b032596c11e538d1584903bb65d6763"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a0b032596c11e538d1584903bb65d6763">canari</a> (void *cookie)</td></tr>
+<tr class="memdesc:a0b032596c11e538d1584903bb65d6763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tâche périodique de très basse priorité et de période inférieure au watchdog signale son activité à chaque période.  <a href="#a0b032596c11e538d1584903bb65d6763">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a0b032596c11e538d1584903bb65d6763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af61d555de681e3123f63de781cbcc363"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#af61d555de681e3123f63de781cbcc363">watchdog</a> (void *cookie)</td></tr>
+<tr class="memdesc:af61d555de681e3123f63de781cbcc363"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tâche périodique de très haute priorité et de période supérieur au canari vérifie à chaque période si le canari est encore en vie.  <a href="#af61d555de681e3123f63de781cbcc363">Plus de détails...</a><br/></td></tr>
+<tr class="separator:af61d555de681e3123f63de781cbcc363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d4cb080f06759f94e2502653267943"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a43d4cb080f06759f94e2502653267943">start_watchdog</a> (void(*suspend_func)(void))</td></tr>
+<tr class="memdesc:a43d4cb080f06759f94e2502653267943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Démarre le watchdog.  <a href="#a43d4cb080f06759f94e2502653267943">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a43d4cb080f06759f94e2502653267943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a231bef0c019032cf16844f46efe9f4a7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a231bef0c019032cf16844f46efe9f4a7">end_watchdog</a> (void)</td></tr>
+<tr class="memdesc:a231bef0c019032cf16844f46efe9f4a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Termine les deux tâches du watchdog.  <a href="#a231bef0c019032cf16844f46efe9f4a7">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a231bef0c019032cf16844f46efe9f4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a9848e6504bb35fd7e14e08d69b58a09a"><td class="memItemLeft" align="right" valign="top">RT_TASK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a9848e6504bb35fd7e14e08d69b58a09a">canariTask</a></td></tr>
+<tr class="separator:a9848e6504bb35fd7e14e08d69b58a09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b9e125477c8ef9ed90e496cfe74aac6"><td class="memItemLeft" align="right" valign="top">RT_TASK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6">watchdogTask</a></td></tr>
+<tr class="separator:a6b9e125477c8ef9ed90e496cfe74aac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31643fbcf95cc90a1dffe308b797f275"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a31643fbcf95cc90a1dffe308b797f275">countCanari</a> = 0</td></tr>
+<tr class="separator:a31643fbcf95cc90a1dffe308b797f275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bf32302602896c442a15c13b3ee142d"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="watchdog_8c.html#a3bf32302602896c442a15c13b3ee142d">watchdog_suspend_function</a> )(void) = NULL</td></tr>
+<tr class="separator:a3bf32302602896c442a15c13b3ee142d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Fonctions permettant la mise en place d'un watchdog. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Y. Thoma &amp; D. Molla </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>08 novembre 2019</dd></dl>
+<p>Le watchdog proposé est implémenté à l'aide de 2 tâches responsables de détecter une surcharge du processeur. Si tel est le cas, une fonction fournie par le développeur est appelée. Elle devrait suspendre ou détruire les tâches courantes, afin de redonner la main à l'OS.</p>
+<p>Solution génnérale : Le canari s'execute deux fois plus souvent que le watchdog. Le canarai incrémente une variable. Cette variable sera checkée dans le watchdog, si la valeur est la même que la dernière vérification, cela signifie que le canarai n'a pas pu l'incrémenter. Donc on stop les tâches courantes.</p>
+<p>Code Xenomai 3.1 </p>
+
+<p>Définition dans le fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+</div><h2 class="groupheader">Documentation des macros</h2>
+<a class="anchor" id="a82b530fbaafb8667d9fefd7b6421bbad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PERIOD_TASK_CANARI&#160;&#160;&#160;1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>&lt; Période des différentes taches en MS Période de la tâche du canari 1000 </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00033">33</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aeae017601623cac12746c6a963ce1afd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PERIOD_TASK_WATCHDOG&#160;&#160;&#160;2000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Période de la tâche du watchdog 1000 Priorité des tâches : 1=faible, 99=forte </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00034">34</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00079">watchdog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a13d864763caf05973522df7742ea3435"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRIO_TASK_CANARI&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Priorité de la tâche du canari </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00037">37</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab4cca47e5a10575559c24e32ca2cc3fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRIO_TASK_WATCHDOG&#160;&#160;&#160;99</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Priorité de la tâche du watchdog </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00038">38</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="a0b032596c11e538d1584903bb65d6763"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void canari </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>cookie</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tâche périodique de très basse priorité et de période inférieure au watchdog signale son activité à chaque période. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cookie</td><td>Non utilisé </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00053">53</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a231bef0c019032cf16844f46efe9f4a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int end_watchdog </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Termine les deux tâches du watchdog. </p>
+<p>Cette fonction doit être appelée par la fonction de cleanup du module afin de libérer les ressources allouées par le watchdog. En l'occurence, les deux tâches du watchdog sont supprimées. Elle peut aussi être appelée à n'importe quel instant pour supprimer la surveillance du watchdog. </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00154">154</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Références <a class="el" href="watchdog_8c_source.html#l00040">canariTask</a>, et <a class="el" href="intro__watchdog_8c_source.html#l00054">watchdogTask</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog_8c_source.html#l00259">cleanup_objects()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a43d4cb080f06759f94e2502653267943"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int start_watchdog </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(void)&#160;</td>
+          <td class="paramname"><em>suspend_func</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Démarre le watchdog. </p>
+<p>Le watchdog lance deux tâches. Une tâche de faible priorité qui incrémente un compteur, et une de priorité maximale mais de période moindre qui vérifie que le compteur s'est incrémenté. Si tel n'est pas le cas, la fonction passée en paramètre est appelée. Elle devrait contenir du code responsable de suspendre ou supprimer les tâches courantes. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">suspend_func</td><td>Fonction appelée par le watchdog en cas de surcharge </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00121">121</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Références <a class="el" href="watchdog_8c_source.html#l00053">canari()</a>, <a class="el" href="watchdog_8c_source.html#l00040">canariTask</a>, <a class="el" href="watchdog_8c_source.html#l00037">PRIO_TASK_CANARI</a>, <a class="el" href="watchdog_8c_source.html#l00038">PRIO_TASK_WATCHDOG</a>, <a class="el" href="general_8h_source.html#l00002">STACK_SIZE</a>, <a class="el" href="watchdog_8c_source.html#l00079">watchdog()</a>, <a class="el" href="watchdog_8c_source.html#l00045">watchdog_suspend_function</a>, et <a class="el" href="intro__watchdog_8c_source.html#l00054">watchdogTask</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af61d555de681e3123f63de781cbcc363"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void watchdog </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>cookie</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tâche périodique de très haute priorité et de période supérieur au canari vérifie à chaque période si le canari est encore en vie. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cookie</td><td>Non utilisé </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00079">79</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Références <a class="el" href="watchdog_8c_source.html#l00043">countCanari</a>, <a class="el" href="busycpu_8c_source.html#l00023">MS</a>, <a class="el" href="watchdog_8c_source.html#l00034">PERIOD_TASK_WATCHDOG</a>, <a class="el" href="watchdog_8c_source.html#l00045">watchdog_suspend_function</a>, et <a class="el" href="intro__watchdog_8c_source.html#l00054">watchdogTask</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a class="anchor" id="a9848e6504bb35fd7e14e08d69b58a09a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RT_TASK canariTask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descripteur de la tâche canari </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00040">40</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00154">end_watchdog()</a>, et <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a31643fbcf95cc90a1dffe308b797f275"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long countCanari = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Variable globale que le canara incrémente </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00043">43</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00079">watchdog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3bf32302602896c442a15c13b3ee142d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* watchdog_suspend_function)(void) = NULL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fonction appelée lors d'une surcharge </p>
+
+<p>Définition à la ligne <a class="el" href="watchdog_8c_source.html#l00045">45</a> du fichier <a class="el" href="watchdog_8c_source.html">watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>, et <a class="el" href="watchdog_8c_source.html#l00079">watchdog()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b9e125477c8ef9ed90e496cfe74aac6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RT_TASK watchdogTask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descripteur de la tâche watchdog visible pour intro_watchdog pour check sa priorité </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog_8c_source.html#l00054">54</a> du fichier <a class="el" href="intro__watchdog_8c_source.html">intro_watchdog.c</a>.</p>
+
+<p>Référencé par <a class="el" href="watchdog_8c_source.html#l00154">end_watchdog()</a>, <a class="el" href="intro__watchdog_8c_source.html#l00128">periodicTask2()</a>, <a class="el" href="watchdog_8c_source.html#l00121">start_watchdog()</a>, et <a class="el" href="watchdog_8c_source.html#l00079">watchdog()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Mardi 19 Novembre 2019 17:41:51 pour Ordonnancement par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

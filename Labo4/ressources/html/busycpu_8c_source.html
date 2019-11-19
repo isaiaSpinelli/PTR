@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Ordonnancement:  Fichier source de busycpu.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Ordonnancement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6fa16f978620865338af57c72fd06fd2.html">cours_REDS</a></li><li class="navelem"><a class="el" href="dir_6cb35e5b62d7ed9ba9811bbe2d8c4ac1.html">PTR</a></li><li class="navelem"><a class="el" href="dir_48391cd78af529076c75545f6360df56.html">IsaiaSpinelli</a></li><li class="navelem"><a class="el" href="dir_be8d4b82f24e773268d1494f762fc575.html">Labo4</a></li><li class="navelem"><a class="el" href="dir_c6814a8a32561838891e42b9a4cebb10.html">ressources</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">busycpu.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="busycpu_8c.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;alchemy/task.h&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;alchemy/alarm.h&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;alchemy/timer.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="busycpu_8h.html">busycpu.h</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="busycpu_8c.html#ab9e061e05d689a5769936b213022102f">   23</a></span>&#160;<span class="preprocessor">#define MS                 1000000     </span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="busycpu_8h.html#a3b276abfdbad9248e08d28e6b95920b9">   26</a></span>&#160;<span class="preprocessor">void busy_cpu(int ms) {</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">volatile</span> <span class="keywordtype">int</span> fake=0;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">int</span> i;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  RT_TASK_INFO info1,info2;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  rt_task_inquire(rt_task_self(),&amp;info1);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  RTIME total=((RTIME)ms)*((RTIME)(1000000));</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordflow">for</span> (i=0;i&lt;10;i++){</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        fake++;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        fake++;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        fake++;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        fake-=3;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    rt_task_inquire(rt_task_self(),&amp;info2);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  } <span class="keywordflow">while</span> (info2.stat.xtime-info1.stat.xtime&lt;total);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="ttc" id="busycpu_8h_html"><div class="ttname"><a href="busycpu_8h.html">busycpu.h</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Mardi 19 Novembre 2019 17:41:51 pour Ordonnancement par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>
