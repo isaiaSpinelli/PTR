@@ -12,7 +12,7 @@
 * watchdog qui pourrait être exploité s'il n'existe pas de détection
 * de surcharge au niveau du noyau.
 *
-* Code Xenomai 3.0
+* Code Xenomai 3.1
 *
 */
 
@@ -24,7 +24,6 @@
 
 #include <alchemy/task.h>
 #include <alchemy/timer.h>
-#include <alchemy/sem.h>
 
 #include "general.h"
 #include "busycpu.h"
@@ -35,8 +34,8 @@
 #define PERIOD_TASK2       200         /**< Période de la tâche 2 */
 #define PERIOD_TASK3       4000        /**< Période de la tâche 3 */
 
-#define CPU_TASK1          50          /**< Temps de traitement de la tâche 1 */
-#define CPU_TASK2          100         /**< Temps de traitement de la tâche 2 */
+#define CPU_TASK1          100          /**< Temps de traitement de la tâche 1 */
+#define CPU_TASK2          160         /**< Temps de traitement de la tâche 2 160 limite*/
 #define CPU_TASK3          100         /**< Temps de traitement de la tâche 3 */
 
 #define PRIO_TASK1         10    /**< Priorité de la tâche 1=faible, 99=forte */
@@ -51,24 +50,33 @@ int installed_task1 = 0; /**< Indique si la tâche 1 est chargée dans le module
 int installed_task2 = 0; /**< Indique si la tâche 2 est chargée dans le module */
 int installed_task3 = 0; /**< Indique si la tâche 3 est chargée dans le module */
 
-RT_SEM barrier; //*< Sémaphore pour une barrière de synchro */
+/**< Descripteur de la tâche watchdog afin de verifier sa priorité*/
+RT_TASK watchdogTask;  
 
 void cleanup_objects(void);
 
 void suspend(void)
 {
-  rt_printf("Suspending the tasks\n");
-  if (installed_task1) {
-    rt_printf("Suspending task 1\n");
-    rt_task_suspend(&myTask1);
-  }
+	int err = 0;
+	
+  //rt_printf("Suspending the tasks\n");
+  rt_printf("************************ Suspending the tasks *************************\n");
   if (installed_task2) {
-    rt_printf("Suspending task 2\n");
-    rt_task_suspend(&myTask2);
+    rt_printf("Deleting task 2\n");
+    err = rt_task_delete(&myTask2);
+    installed_task2=0;
   }
+  
+  if (installed_task1) {
+    rt_printf("Deleting task 1\n");
+    err = rt_task_delete(&myTask1);
+    installed_task1=0;
+  }
+  
   if (installed_task3) {
-    rt_printf("Suspending task 3\n");
-    rt_task_suspend(&myTask3);
+    rt_printf("Deleting task 3\n");
+    rt_task_delete(&myTask3);
+    installed_task3=0;
   }
   return;
 }
@@ -85,17 +93,12 @@ void suspend(void)
 */
 void periodicTask1(void *cookie) {
 
-  rt_sem_p(&barrier, TM_INFINITE);
-
   /* Configuration de la tâche périodique */
   RTIME period = ((RTIME)PERIOD_TASK1)*((RTIME)MS);
   int err = rt_task_set_periodic(&myTask1, rt_timer_read() + period, period);
   if (err != 0) {
-    printf("task 1 set periodic failed: %s\n", strerror(-err));
+    printf("task set periodic failed: %s\n", strerror(-err));
     return;
-  }
-  else {
-    rt_printf("task 1 set periodic OK\n");
   }
 
   rt_printf("Starting periodic task 1\n", TM_NOW);
@@ -124,17 +127,13 @@ void periodicTask1(void *cookie) {
 */
 void periodicTask2(void *cookie) {
 
-  rt_sem_p(&barrier, TM_INFINITE);
-
   /* Configuration de la tâche périodique */
   RTIME period = ((RTIME)PERIOD_TASK2)*((RTIME)MS);
+  RT_TASK_INFO infoWatchdog ;
   int err = rt_task_set_periodic(&myTask2, rt_timer_read() + period, period);
   if (err != 0) {
-    printf("task 2 set periodic failed: %s\n", strerror(-err));
+    printf("task set periodic failed: %s\n", strerror(-err));
     return;
-  }
-  else {
-    rt_printf("task 2 set periodic OK\n");
   }
 
   rt_printf("Starting periodic task 2\n", TM_NOW);
@@ -143,6 +142,9 @@ void periodicTask2(void *cookie) {
 
     /* simulation traitement */
     rt_printf("Periodic task 2: starts execution\n");
+    /* Récupère et affiche la priorité du watchdog */
+	rt_task_inquire(&watchdogTask, &infoWatchdog ); 	
+	rt_printf("Priority Watchdog = %d \n", infoWatchdog.prio);
     busy_cpu(CPU_TASK2);
     rt_printf("Periodic task 2: end of execution\n");
 
@@ -161,19 +163,13 @@ void periodicTask2(void *cookie) {
 */
 void periodicTask3(void *cookie) {
 
-  rt_sem_p(&barrier, TM_INFINITE);
-
   /* Configuration de la tâche périodique */
   RTIME period = ((RTIME)PERIOD_TASK3)*((RTIME)MS);
   int err = rt_task_set_periodic(&myTask3, rt_timer_read() + period, period);
   if (err != 0) {
-    printf("task 3 set periodic failed: %s\n", strerror(-err));
+    printf("task set periodic failed: %s\n", strerror(-err));
     return;
   }
-  else {
-    rt_printf("task 3 set periodic OK\n");
-  }
-
 
   rt_printf("Starting periodic task 3\n", TM_NOW);
 
@@ -189,6 +185,13 @@ void periodicTask3(void *cookie) {
 
 }
 
+
+
+void catch_signal(int sig)
+{
+  cleanup_objects();
+}
+
 /** \brief Routine appelée au chargement du module
 *
 * Cette routine est appelé lors du chargement du module dans l'espace noyau.
@@ -198,15 +201,16 @@ int main(int argc, char* argv[]) {
 
   int err; /* stockage du code d'erreur */
 
-  printf("Initialisation\n");
+  printf("***********Initialisation***********\n");
+
+  signal(SIGTERM, catch_signal);
+  signal(SIGINT, catch_signal);
 
   /* Avoids memory swapping for this program */
   mlockall(MCL_CURRENT|MCL_FUTURE);
 
-  if (!start_watchdog(suspend))
-    goto fail;
-
-  rt_sem_create(&barrier, "sem", 0, S_PULSE);
+  if (start_watchdog(suspend) != 1)
+	goto fail;
 
   /* Création de la tâche périodique 1 */
   err =  rt_task_spawn (&myTask1, "myTask1", STACK_SIZE, PRIO_TASK1, 0, periodicTask1, 0);
@@ -214,9 +218,9 @@ int main(int argc, char* argv[]) {
     printf("task 1 creation failed: %s\n", strerror(-err));
     goto fail;
   }
-  else {
-    installed_task1=1;
-  }
+  else
+  installed_task1=1;
+
 
   /* Création de la tâche périodique 2 */
   err =  rt_task_spawn (&myTask2, "myTask2", STACK_SIZE, PRIO_TASK2, 0, periodicTask2, 0);
@@ -224,9 +228,9 @@ int main(int argc, char* argv[]) {
     printf("task 2 creation failed: %s\n", strerror(-err));
     goto fail;
   }
-  else {
-    installed_task2=1;
-  }
+  else
+  installed_task2=1;
+
 
   /* Création de la tâche périodique 3 */
   err =  rt_task_spawn (&myTask3, "myTask3", STACK_SIZE, PRIO_TASK3, 0, periodicTask3, 0);
@@ -234,21 +238,17 @@ int main(int argc, char* argv[]) {
     printf("task 3 creation failed: %s\n", strerror(-err));
     goto fail;
   }
-  else {
-    installed_task3=1;
-  }
+  else
+  installed_task3=1;
 
-  /* Relâchement des tâches. Le broadcast fonctionne car les tâches sont plus prioritaires
-     que le main(). Si elles ne le sont pas le broadcast n'est pas sûr. */
-  rt_sem_broadcast(&barrier);
 
   pause();
 
   return 0;
-  
+
   fail:
-    cleanup_objects();
-    return -1;
+  cleanup_objects();
+  return -1;
 }
 
 /** \brief Routine appelée lors d'un échec de l'initialisation
