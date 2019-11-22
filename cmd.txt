@@ -16,7 +16,9 @@ sudo /usr/lib/xenomai/testsuite/dohell -b /home/redsuser/timer_1000_500 -s 10.19
 
 ## Ethernet DE1
 
-boot -> root
+picocom -b 115200 /dev/ttyUSB0
+
+boot -> rootyx2
 
 # configure la bonne addresse IP à la **DE1**
 ifconfig eth0 192.168.1.3 netmask 255.255.255.0 up

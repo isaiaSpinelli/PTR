@@ -4,6 +4,7 @@
 <param name="FrameName" value="right">
 </OBJECT>
 <UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af584cd209690209697a7bfb50274c8a2"><param name="Name" value="barrier"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="busycpu_8c.html#a3b276abfdbad9248e08d28e6b95920b9"><param name="Name" value="busy_cpu"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="busycpu_8c.html#a3b276abfdbad9248e08d28e6b95920b9"><param name="Name" value="busycpu.c"></OBJECT>
@@ -17,12 +18,29 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="busycpu_8h.html"><param name="Name" value="busycpu.h"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a0b032596c11e538d1584903bb65d6763"><param name="Name" value="canari"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a9848e6504bb35fd7e14e08d69b58a09a"><param name="Name" value="canariTask"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af2dc378d0481adcc49b61efb98493a9b"><param name="Name" value="catch_signal"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b"><param name="Name" value="catch_signal"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a8585301c96c9164f4f3e17f9c3e5fb7c"><param name="Name" value="CHARGE_CPU_TASK2_ADD"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#ab1a58b850c22cba6e6a88319b0243dc4"><param name="Name" value="cleanup_objects"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#ab1a58b850c22cba6e6a88319b0243dc4"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a31643fbcf95cc90a1dffe308b797f275"><param name="Name" value="countCanari"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a077d3c6393a056af8e6585ab611bd862"><param name="Name" value="CPU_TASK1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a077d3c6393a056af8e6585ab611bd862"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a077d3c6393a056af8e6585ab611bd862"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#aa9a486bfc538e8667a8c7866bfe806c5"><param name="Name" value="CPU_TASK2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#aa9a486bfc538e8667a8c7866bfe806c5"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#aa9a486bfc538e8667a8c7866bfe806c5"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#ab5bec16e307935bf9d9f650a60a7a160"><param name="Name" value="CPU_TASK3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#ab5bec16e307935bf9d9f650a60a7a160"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#ab5bec16e307935bf9d9f650a60a7a160"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a231bef0c019032cf16844f46efe9f4a7"><param name="Name" value="end_watchdog"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a231bef0c019032cf16844f46efe9f4a7"><param name="Name" value="watchdog.c"></OBJECT>
@@ -34,11 +52,24 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="general_8h.html#a6423a880df59733d2d9b509c7718d3a9"><param name="Name" value="STACK_SIZE"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a34b7c3609e8064f37e03462f5d16f107"><param name="Name" value="installed_task1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a34b7c3609e8064f37e03462f5d16f107"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a636e472148d1958b49ee780a6a7e8b6a"><param name="Name" value="installed_task2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a636e472148d1958b49ee780a6a7e8b6a"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8"><param name="Name" value="installed_task3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html"><param name="Name" value="intro_watchdog.c"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af2dc378d0481adcc49b61efb98493a9b"><param name="Name" value="catch_signal"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af584cd209690209697a7bfb50274c8a2"><param name="Name" value="barrier"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a8585301c96c9164f4f3e17f9c3e5fb7c"><param name="Name" value="CHARGE_CPU_TASK2_ADD"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#ab1a58b850c22cba6e6a88319b0243dc4"><param name="Name" value="cleanup_objects"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a077d3c6393a056af8e6585ab611bd862"><param name="Name" value="CPU_TASK1"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#aa9a486bfc538e8667a8c7866bfe806c5"><param name="Name" value="CPU_TASK2"></OBJECT>
@@ -50,6 +81,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a203a0e1b2b2dde69961fd563460d364f"><param name="Name" value="myTask1"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd"><param name="Name" value="myTask2"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#aa8c6452d9f64232584e366ab95128992"><param name="Name" value="myTask3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a1cb38e9410f16a8ac6ea7b0746679a9a"><param name="Name" value="N_FOIS_TASK2"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a787150db05698988ec7d248669492551"><param name="Name" value="PERIOD_TASK1"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918"><param name="Name" value="PERIOD_TASK2"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb"><param name="Name" value="PERIOD_TASK3"></OBJECT>
@@ -60,28 +92,106 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a6186a07149167b4bddc474332080c9a5"><param name="Name" value="PRIO_TASK2"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a31deafe2f33f39edb8e058212526e572"><param name="Name" value="PRIO_TASK3"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#acf110e07a416e636772e6ba9c3246ebb"><param name="Name" value="suspend"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="watchdogTask"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b"><param name="Name" value="catch_signal"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4"><param name="Name" value="cleanup_objects"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a077d3c6393a056af8e6585ab611bd862"><param name="Name" value="CPU_TASK1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#aa9a486bfc538e8667a8c7866bfe806c5"><param name="Name" value="CPU_TASK2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#ab5bec16e307935bf9d9f650a60a7a160"><param name="Name" value="CPU_TASK3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107"><param name="Name" value="installed_task1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a"><param name="Name" value="installed_task2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8"><param name="Name" value="installed_task3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="main"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f"><param name="Name" value="myTask1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd"><param name="Name" value="myTask2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992"><param name="Name" value="myTask3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a787150db05698988ec7d248669492551"><param name="Name" value="PERIOD_TASK1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918"><param name="Name" value="PERIOD_TASK2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb"><param name="Name" value="PERIOD_TASK3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e"><param name="Name" value="periodicTask1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d"><param name="Name" value="periodicTask2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a"><param name="Name" value="periodicTask3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#afa51dfe428af89277bfdcdf58bc78006"><param name="Name" value="PRIO_TASK1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a6186a07149167b4bddc474332080c9a5"><param name="Name" value="PRIO_TASK2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a31deafe2f33f39edb8e058212526e572"><param name="Name" value="PRIO_TASK3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb"><param name="Name" value="suspend"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="watchdogTask"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="main"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="busycpu_8c.html#ab9e061e05d689a5769936b213022102f"><param name="Name" value="MS"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="busycpu_8c.html#ab9e061e05d689a5769936b213022102f"><param name="Name" value="busycpu.c"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="general_8h.html#ab9e061e05d689a5769936b213022102f"><param name="Name" value="general.h"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a203a0e1b2b2dde69961fd563460d364f"><param name="Name" value="myTask1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a203a0e1b2b2dde69961fd563460d364f"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd"><param name="Name" value="myTask2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#aa8c6452d9f64232584e366ab95128992"><param name="Name" value="myTask3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#aa8c6452d9f64232584e366ab95128992"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a1cb38e9410f16a8ac6ea7b0746679a9a"><param name="Name" value="N_FOIS_TASK2"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a787150db05698988ec7d248669492551"><param name="Name" value="PERIOD_TASK1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a787150db05698988ec7d248669492551"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a787150db05698988ec7d248669492551"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918"><param name="Name" value="PERIOD_TASK2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb"><param name="Name" value="PERIOD_TASK3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a82b530fbaafb8667d9fefd7b6421bbad"><param name="Name" value="PERIOD_TASK_CANARI"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#aeae017601623cac12746c6a963ce1afd"><param name="Name" value="PERIOD_TASK_WATCHDOG"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a0b73f148b53c447692d4fb18b9d6704e"><param name="Name" value="periodicTask1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a0b73f148b53c447692d4fb18b9d6704e"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a723bea0262e0c80c771fd0d2f951014d"><param name="Name" value="periodicTask2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a723bea0262e0c80c771fd0d2f951014d"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a"><param name="Name" value="periodicTask3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#afa51dfe428af89277bfdcdf58bc78006"><param name="Name" value="PRIO_TASK1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#afa51dfe428af89277bfdcdf58bc78006"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#afa51dfe428af89277bfdcdf58bc78006"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a6186a07149167b4bddc474332080c9a5"><param name="Name" value="PRIO_TASK2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a6186a07149167b4bddc474332080c9a5"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a6186a07149167b4bddc474332080c9a5"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a31deafe2f33f39edb8e058212526e572"><param name="Name" value="PRIO_TASK3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a31deafe2f33f39edb8e058212526e572"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a31deafe2f33f39edb8e058212526e572"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a13d864763caf05973522df7742ea3435"><param name="Name" value="PRIO_TASK_CANARI"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#ab4cca47e5a10575559c24e32ca2cc3fd"><param name="Name" value="PRIO_TASK_WATCHDOG"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="general_8h.html#a6423a880df59733d2d9b509c7718d3a9"><param name="Name" value="STACK_SIZE"></OBJECT>
@@ -91,6 +201,10 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8h.html#a43d4cb080f06759f94e2502653267943"><param name="Name" value="watchdog.h"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#acf110e07a416e636772e6ba9c3246ebb"><param name="Name" value="suspend"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#acf110e07a416e636772e6ba9c3246ebb"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html"><param name="Name" value="watchdog.c"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a0b032596c11e538d1584903bb65d6763"><param name="Name" value="canari"></OBJECT>
@@ -113,9 +227,9 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#af61d555de681e3123f63de781cbcc363"><param name="Name" value="watchdog"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a3bf32302602896c442a15c13b3ee142d"><param name="Name" value="watchdog_suspend_function"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="watchdogTask"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="watchdogTask"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="intro_watchdog.c"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="intro_watchdog_old.c"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="watchdog_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6"><param name="Name" value="watchdog.c"></OBJECT>
   </UL>
 </UL>

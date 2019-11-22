@@ -59,7 +59,7 @@ Y. Thoma \& D. Molla
 \end{DoxyDate}
 Le watchdog proposé est implémenté à l'aide de 2 tâches responsables de détecter une surcharge du processeur. Si tel est le cas, une fonction fournie par le développeur est appelée. Elle devrait suspendre ou détruire les tâches courantes, afin de redonner la main à l'O\-S.
 
-Solution génnérale \-: Le canari s'execute deux fois plus souvent que le watchdog. Le canarai incrémente une variable. Cette variable sera checkée dans le watchdog, si la valeur est la même que la dernière vérification, cela signifie que le canarai n'a pas pu l'incrémenter. Donc on stop les tâches courantes.
+Solution générale \-: Le canari s'execute deux fois plus souvent que le watchdog. Le canarai incrémente une variable. Cette variable sera checkée dans le watchdog, si la valeur est la même que la dernière vérification, cela signifie que le canarai n'a pas pu l'incrémenter pendant 2 périodes. Donc le C\-P\-U est surchargé et on suspent les tâches courantes.
 
 Code Xenomai 3.\-1 
 
@@ -148,7 +148,7 @@ Termine les deux tâches du watchdog.
 
 Cette fonction doit être appelée par la fonction de cleanup du module afin de libérer les ressources allouées par le watchdog. En l'occurence, les deux tâches du watchdog sont supprimées. Elle peut aussi être appelée à n'importe quel instant pour supprimer la surveillance du watchdog. 
 
-Définition à la ligne 154 du fichier watchdog.\-c.
+Définition à la ligne 153 du fichier watchdog.\-c.
 
 
 
@@ -176,7 +176,7 @@ Le watchdog lance deux tâches. Une tâche de faible priorité qui incrémente u
 \end{DoxyParams}
 
 
-Définition à la ligne 121 du fichier watchdog.\-c.
+Définition à la ligne 120 du fichier watchdog.\-c.
 
 
 
@@ -253,11 +253,11 @@ Référencé par start\-\_\-watchdog(), et watchdog().
 \hypertarget{watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}{\index{watchdog.\-c@{watchdog.\-c}!watchdog\-Task@{watchdog\-Task}}
 \index{watchdog\-Task@{watchdog\-Task}!watchdog.c@{watchdog.\-c}}
 \subsubsection[{watchdog\-Task}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K watchdog\-Task}}\label{watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}
-Descripteur de la tâche watchdog visible pour intro\-\_\-watchdog pour check sa priorité 
+Descripteur de la tâche watchdog 
 
-Définition à la ligne 54 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 41 du fichier watchdog.\-c.
 
 
 
-Référencé par end\-\_\-watchdog(), periodic\-Task2(), start\-\_\-watchdog(), et watchdog().
+Référencé par end\-\_\-watchdog(), start\-\_\-watchdog(), et watchdog().
 

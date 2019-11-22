@@ -1,0 +1,612 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Ordonnancement: Référence du fichier intro_watchdog_old.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Ordonnancement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6fa16f978620865338af57c72fd06fd2.html">cours_REDS</a></li><li class="navelem"><a class="el" href="dir_6cb35e5b62d7ed9ba9811bbe2d8c4ac1.html">PTR</a></li><li class="navelem"><a class="el" href="dir_b8f9f851cd7b1bfd125e3fb94868d334.html">isaiaSpinelli</a></li><li class="navelem"><a class="el" href="dir_72c92aaceb08b96c1580f4e34a8a11ff.html">PTR</a></li><li class="navelem"><a class="el" href="dir_aef0690d60a4e5a411747127bcf3a692.html">Labo4</a></li><li class="navelem"><a class="el" href="dir_f9bc5ddab4c6a1ce03f7c2fcedeffb44.html">ressources</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier intro_watchdog_old.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;sys/mman.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;signal.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;alchemy/task.h&gt;</code><br/>
+<code>#include &lt;alchemy/timer.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="general_8h_source.html">general.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="busycpu_8h_source.html">busycpu.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="watchdog_8h_source.html">watchdog.h</a>&quot;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de intro_watchdog_old.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="intro__watchdog__old_8c__incl.png" border="0" usemap="#intro__watchdog__old_8c" alt=""/></div>
+<map name="intro__watchdog__old_8c" id="intro__watchdog__old_8c">
+</map>
+</div>
+</div>
+<p><a href="intro__watchdog__old_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a787150db05698988ec7d248669492551"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a787150db05698988ec7d248669492551">PERIOD_TASK1</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="separator:a787150db05698988ec7d248669492551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd6acc6b57e4c1d71e2b39b91aa8918"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918">PERIOD_TASK2</a>&#160;&#160;&#160;200</td></tr>
+<tr class="separator:accd6acc6b57e4c1d71e2b39b91aa8918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8321ffc110a65cd7342d8a9445c2e9fb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb">PERIOD_TASK3</a>&#160;&#160;&#160;4000</td></tr>
+<tr class="separator:a8321ffc110a65cd7342d8a9445c2e9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077d3c6393a056af8e6585ab611bd862"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a077d3c6393a056af8e6585ab611bd862">CPU_TASK1</a>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:a077d3c6393a056af8e6585ab611bd862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9a486bfc538e8667a8c7866bfe806c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#aa9a486bfc538e8667a8c7866bfe806c5">CPU_TASK2</a>&#160;&#160;&#160;160</td></tr>
+<tr class="separator:aa9a486bfc538e8667a8c7866bfe806c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5bec16e307935bf9d9f650a60a7a160"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#ab5bec16e307935bf9d9f650a60a7a160">CPU_TASK3</a>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:ab5bec16e307935bf9d9f650a60a7a160"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa51dfe428af89277bfdcdf58bc78006"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#afa51dfe428af89277bfdcdf58bc78006">PRIO_TASK1</a>&#160;&#160;&#160;10</td></tr>
+<tr class="separator:afa51dfe428af89277bfdcdf58bc78006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6186a07149167b4bddc474332080c9a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a6186a07149167b4bddc474332080c9a5">PRIO_TASK2</a>&#160;&#160;&#160;15</td></tr>
+<tr class="separator:a6186a07149167b4bddc474332080c9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31deafe2f33f39edb8e058212526e572"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a31deafe2f33f39edb8e058212526e572">PRIO_TASK3</a>&#160;&#160;&#160;20</td></tr>
+<tr class="separator:a31deafe2f33f39edb8e058212526e572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ab1a58b850c22cba6e6a88319b0243dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">cleanup_objects</a> (void)</td></tr>
+<tr class="memdesc:ab1a58b850c22cba6e6a88319b0243dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine appelée lors d'un échec de l'initialisation.  <a href="#ab1a58b850c22cba6e6a88319b0243dc4">Plus de détails...</a><br/></td></tr>
+<tr class="separator:ab1a58b850c22cba6e6a88319b0243dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf110e07a416e636772e6ba9c3246ebb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb">suspend</a> (void)</td></tr>
+<tr class="separator:acf110e07a416e636772e6ba9c3246ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b73f148b53c447692d4fb18b9d6704e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e">periodicTask1</a> (void *cookie)</td></tr>
+<tr class="memdesc:a0b73f148b53c447692d4fb18b9d6704e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tâche périodique.  <a href="#a0b73f148b53c447692d4fb18b9d6704e">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a0b73f148b53c447692d4fb18b9d6704e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723bea0262e0c80c771fd0d2f951014d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d">periodicTask2</a> (void *cookie)</td></tr>
+<tr class="memdesc:a723bea0262e0c80c771fd0d2f951014d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tâche périodique.  <a href="#a723bea0262e0c80c771fd0d2f951014d">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a723bea0262e0c80c771fd0d2f951014d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ac6a360bf56ec4a34749cbc9dbf1b6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a">periodicTask3</a> (void *cookie)</td></tr>
+<tr class="memdesc:a9ac6a360bf56ec4a34749cbc9dbf1b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tâche périodique.  <a href="#a9ac6a360bf56ec4a34749cbc9dbf1b6a">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a9ac6a360bf56ec4a34749cbc9dbf1b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2dc378d0481adcc49b61efb98493a9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b">catch_signal</a> (int sig)</td></tr>
+<tr class="separator:af2dc378d0481adcc49b61efb98493a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a0ddf1224851353fc92bfbff6f499fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine appelée au chargement du module.  <a href="#a0ddf1224851353fc92bfbff6f499fa97">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a203a0e1b2b2dde69961fd563460d364f"><td class="memItemLeft" align="right" valign="top">RT_TASK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">myTask1</a></td></tr>
+<tr class="separator:a203a0e1b2b2dde69961fd563460d364f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b3b175cf093a0c6ab5f67f09417fcd"><td class="memItemLeft" align="right" valign="top">RT_TASK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">myTask2</a></td></tr>
+<tr class="separator:af0b3b175cf093a0c6ab5f67f09417fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8c6452d9f64232584e366ab95128992"><td class="memItemLeft" align="right" valign="top">RT_TASK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">myTask3</a></td></tr>
+<tr class="separator:aa8c6452d9f64232584e366ab95128992"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34b7c3609e8064f37e03462f5d16f107"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">installed_task1</a> = 0</td></tr>
+<tr class="separator:a34b7c3609e8064f37e03462f5d16f107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a636e472148d1958b49ee780a6a7e8b6a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">installed_task2</a> = 0</td></tr>
+<tr class="separator:a636e472148d1958b49ee780a6a7e8b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfb8f7fdbe38f6caded7a98f00ae6de8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">installed_task3</a> = 0</td></tr>
+<tr class="separator:adfb8f7fdbe38f6caded7a98f00ae6de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b9e125477c8ef9ed90e496cfe74aac6"><td class="memItemLeft" align="right" valign="top">RT_TASK&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6">watchdogTask</a></td></tr>
+<tr class="separator:a6b9e125477c8ef9ed90e496cfe74aac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des macros</h2>
+<a class="anchor" id="a077d3c6393a056af8e6585ab611bd862"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CPU_TASK1&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Temps de traitement de la tâche 1 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00037">37</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00094">periodicTask1()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa9a486bfc538e8667a8c7866bfe806c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CPU_TASK2&#160;&#160;&#160;160</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Temps de traitement de la tâche 2 160 limite </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00038">38</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00128">periodicTask2()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab5bec16e307935bf9d9f650a60a7a160"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CPU_TASK3&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Temps de traitement de la tâche 3 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00039">39</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00164">periodicTask3()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a787150db05698988ec7d248669492551"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PERIOD_TASK1&#160;&#160;&#160;1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Période de la tâche 1 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00033">33</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00094">periodicTask1()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="accd6acc6b57e4c1d71e2b39b91aa8918"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PERIOD_TASK2&#160;&#160;&#160;200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Période de la tâche 2 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00034">34</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00128">periodicTask2()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8321ffc110a65cd7342d8a9445c2e9fb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PERIOD_TASK3&#160;&#160;&#160;4000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Période de la tâche 3 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00035">35</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00164">periodicTask3()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa51dfe428af89277bfdcdf58bc78006"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRIO_TASK1&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Priorité de la tâche 1=faible, 99=forte </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00041">41</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6186a07149167b4bddc474332080c9a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRIO_TASK2&#160;&#160;&#160;15</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Priorité de la tâche 1=faible, 99=forte </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00042">42</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a31deafe2f33f39edb8e058212526e572"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PRIO_TASK3&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Priorité de la tâche 1=faible, 99=forte </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00043">43</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="af2dc378d0481adcc49b61efb98493a9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void catch_signal </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00190">190</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab1a58b850c22cba6e6a88319b0243dc4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cleanup_objects </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Routine appelée lors d'un échec de l'initialisation. </p>
+<p>Routine de nettoyage des objets alloués. Cette routine est appelée lorsque l'initialisation a échoué. </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00259">259</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="watchdog_8c_source.html#l00153">end_watchdog()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00049">installed_task1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00050">installed_task2</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00051">installed_task3</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00045">myTask1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00046">myTask2</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00047">myTask3</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00190">catch_signal()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Routine appelée au chargement du module. </p>
+<p>Cette routine est appelé lors du chargement du module dans l'espace noyau. C'est le point d'entrée de notre application temps-réel. </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00200">200</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="intro__watchdog__old_8c_source.html#l00190">catch_signal()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00049">installed_task1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00050">installed_task2</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00051">installed_task3</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00045">myTask1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00046">myTask2</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00047">myTask3</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00094">periodicTask1()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00128">periodicTask2()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00164">periodicTask3()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00041">PRIO_TASK1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00042">PRIO_TASK2</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00043">PRIO_TASK3</a>, <a class="el" href="general_8h_source.html#l00002">STACK_SIZE</a>, <a class="el" href="watchdog_8c_source.html#l00120">start_watchdog()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0b73f148b53c447692d4fb18b9d6704e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void periodicTask1 </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>cookie</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tâche périodique. </p>
+<p>La fonction busy_cpu(..) permet de consommer (inutilement) du temps CPU; utile pour simuler des charges! La fonction rt_printf() permet d'afficher quelque chose sur la console. Elle s'utilise comme la fonction rt_printf() </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cookie</td><td>Non utilisé </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00094">94</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="busycpu_8c_source.html#l00026">busy_cpu()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00037">CPU_TASK1</a>, <a class="el" href="busycpu_8c_source.html#l00023">MS</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00045">myTask1</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00033">PERIOD_TASK1</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a723bea0262e0c80c771fd0d2f951014d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void periodicTask2 </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>cookie</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tâche périodique. </p>
+<p>La fonction busy_cpu(..) permet de consommer (inutilement) du temps CPU; utile pour simuler des charges! La fonction rt_printf() permet d'afficher quelque chose sur la console. Elle s'utilise comme la fonction rt_printf() </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cookie</td><td>Non utilisé </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00128">128</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="busycpu_8c_source.html#l00026">busy_cpu()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00038">CPU_TASK2</a>, <a class="el" href="busycpu_8c_source.html#l00023">MS</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00046">myTask2</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00034">PERIOD_TASK2</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00054">watchdogTask</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ac6a360bf56ec4a34749cbc9dbf1b6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void periodicTask3 </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>cookie</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tâche périodique. </p>
+<p>La fonction busy_cpu(..) permet de consommer (inutilement) du temps CPU; utile pour simuler des charges! La fonction rt_printf() permet d'afficher quelque chose sur la console. Elle s'utilise comme la fonction rt_printf() </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cookie</td><td>Non utilisé </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00164">164</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="busycpu_8c_source.html#l00026">busy_cpu()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00039">CPU_TASK3</a>, <a class="el" href="busycpu_8c_source.html#l00023">MS</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00047">myTask3</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00035">PERIOD_TASK3</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acf110e07a416e636772e6ba9c3246ebb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void suspend </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00058">58</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Références <a class="el" href="intro__watchdog__old_8c_source.html#l00049">installed_task1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00050">installed_task2</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00051">installed_task3</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00045">myTask1</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00046">myTask2</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00047">myTask3</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a class="anchor" id="a34b7c3609e8064f37e03462f5d16f107"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int installed_task1 = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indique si la tâche 1 est chargée dans le module </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00049">49</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a636e472148d1958b49ee780a6a7e8b6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int installed_task2 = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indique si la tâche 2 est chargée dans le module </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00050">50</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adfb8f7fdbe38f6caded7a98f00ae6de8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int installed_task3 = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indique si la tâche 3 est chargée dans le module Descripteur de la tâche watchdog afin de verifier sa priorité </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00051">51</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a203a0e1b2b2dde69961fd563460d364f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RT_TASK myTask1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descripteur de la tâche périodique 1 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00045">45</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00094">periodicTask1()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af0b3b175cf093a0c6ab5f67f09417fcd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RT_TASK myTask2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descripteur de la tâche périodique 2 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00046">46</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00128">periodicTask2()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa8c6452d9f64232584e366ab95128992"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RT_TASK myTask3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descripteur de la tâche périodique 3 </p>
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00047">47</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00259">cleanup_objects()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00200">main()</a>, <a class="el" href="intro__watchdog__old_8c_source.html#l00164">periodicTask3()</a>, et <a class="el" href="intro__watchdog__old_8c_source.html#l00058">suspend()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b9e125477c8ef9ed90e496cfe74aac6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RT_TASK watchdogTask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="intro__watchdog__old_8c_source.html#l00054">54</a> du fichier <a class="el" href="intro__watchdog__old_8c_source.html">intro_watchdog_old.c</a>.</p>
+
+<p>Référencé par <a class="el" href="intro__watchdog__old_8c_source.html#l00128">periodicTask2()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 22 Novembre 2019 13:41:30 pour Ordonnancement par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

@@ -11,12 +11,12 @@
 * fournie par le développeur est appelée. Elle devrait suspendre ou détruire
 * les tâches courantes, afin de redonner la main à l'OS.
 * 
-* Solution génnérale :
+* Solution générale :
 * Le canari s'execute deux fois plus souvent que le watchdog. 
 * Le canarai incrémente une variable. Cette variable sera checkée dans le watchdog, 
 * si la valeur est la même que la dernière vérification, 
-* cela signifie que le canarai n'a pas pu l'incrémenter. 
-* Donc on stop les tâches courantes.
+* cela signifie que le canarai n'a pas pu l'incrémenter pendant 2 périodes. 
+* Donc le CPU est surchargé et on suspent les tâches courantes.
 *
 * Code Xenomai 3.1
 *
@@ -30,7 +30,7 @@
 #include "general.h"
 
 /**< Période des différentes taches en MS */
-#define PERIOD_TASK_CANARI 			1000        		/**< Période de la tâche du canari 1000 */
+#define PERIOD_TASK_CANARI 			1000        	/**< Période de la tâche du canari 1000 */
 #define PERIOD_TASK_WATCHDOG    	2000         	/**< Période de la tâche du watchdog   1000 */
 
 /**< Priorité des tâches :  1=faible, 99=forte */
@@ -38,7 +38,7 @@
 #define PRIO_TASK_WATCHDOG       	99    		/**< Priorité de la tâche du watchdog */
 
 RT_TASK canariTask;  	/**< Descripteur de la tâche canari */
-extern RT_TASK watchdogTask;  	/**< Descripteur de la tâche watchdog visible pour intro_watchdog pour check sa priorité*/
+RT_TASK watchdogTask;  	/**< Descripteur de la tâche watchdog*/
  
 unsigned long countCanari = 0; /**< Variable globale que le canara incrémente */
 
@@ -93,15 +93,14 @@ void watchdog(void *cookie) {
 	 * Vérifie à chaque période si le canari est encore en vie
 	 */
 	while (1) {
-		
+		/* Si il y a une erreur, suspens les tâches */
 		if (check == countCanari) {
 			rt_printf("************************ ERROR ************************\n");
 			watchdog_suspend_function();
 		}
+		/* Màj la valeur du canari et attend la prochaine période */
 		check = countCanari;
-		
 		rt_printf("************************ CANARI ALIVE ************************\n");
-
 		rt_task_wait_period(NULL);
 
 	}

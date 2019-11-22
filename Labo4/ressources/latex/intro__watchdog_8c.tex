@@ -13,6 +13,7 @@ Application pour l'introduction aux concept de tâche.
 {\ttfamily \#include $<$string.\-h$>$}\\*
 {\ttfamily \#include $<$alchemy/task.\-h$>$}\\*
 {\ttfamily \#include $<$alchemy/timer.\-h$>$}\\*
+{\ttfamily \#include $<$alchemy/sem.\-h$>$}\\*
 {\ttfamily \#include \char`\"{}general.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}busycpu.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}watchdog.\-h\char`\"{}}\\*
@@ -26,9 +27,9 @@ Graphe des dépendances par inclusion de intro\-\_\-watchdog.\-c\-:
 \item 
 \#define \hyperlink{intro__watchdog_8c_a8321ffc110a65cd7342d8a9445c2e9fb}{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K3}~4000
 \item 
-\#define \hyperlink{intro__watchdog_8c_a077d3c6393a056af8e6585ab611bd862}{C\-P\-U\-\_\-\-T\-A\-S\-K1}~100
+\#define \hyperlink{intro__watchdog_8c_a077d3c6393a056af8e6585ab611bd862}{C\-P\-U\-\_\-\-T\-A\-S\-K1}~50
 \item 
-\#define \hyperlink{intro__watchdog_8c_aa9a486bfc538e8667a8c7866bfe806c5}{C\-P\-U\-\_\-\-T\-A\-S\-K2}~160
+\#define \hyperlink{intro__watchdog_8c_aa9a486bfc538e8667a8c7866bfe806c5}{C\-P\-U\-\_\-\-T\-A\-S\-K2}~100
 \item 
 \#define \hyperlink{intro__watchdog_8c_ab5bec16e307935bf9d9f650a60a7a160}{C\-P\-U\-\_\-\-T\-A\-S\-K3}~100
 \item 
@@ -37,6 +38,10 @@ Graphe des dépendances par inclusion de intro\-\_\-watchdog.\-c\-:
 \#define \hyperlink{intro__watchdog_8c_a6186a07149167b4bddc474332080c9a5}{P\-R\-I\-O\-\_\-\-T\-A\-S\-K2}~15
 \item 
 \#define \hyperlink{intro__watchdog_8c_a31deafe2f33f39edb8e058212526e572}{P\-R\-I\-O\-\_\-\-T\-A\-S\-K3}~20
+\item 
+\#define \hyperlink{intro__watchdog_8c_a8585301c96c9164f4f3e17f9c3e5fb7c}{C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D}~20
+\item 
+\#define \hyperlink{intro__watchdog_8c_a1cb38e9410f16a8ac6ea7b0746679a9a}{N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2}~20
 \end{DoxyCompactItemize}
 \subsection*{Fonctions}
 \begin{DoxyCompactItemize}
@@ -51,8 +56,6 @@ void \hyperlink{intro__watchdog_8c_a723bea0262e0c80c771fd0d2f951014d}{periodic\-
 \begin{DoxyCompactList}\small\item\em Tâche périodique. \end{DoxyCompactList}\item 
 void \hyperlink{intro__watchdog_8c_a9ac6a360bf56ec4a34749cbc9dbf1b6a}{periodic\-Task3} (void $\ast$cookie)
 \begin{DoxyCompactList}\small\item\em Tâche périodique. \end{DoxyCompactList}\item 
-void \hyperlink{intro__watchdog_8c_af2dc378d0481adcc49b61efb98493a9b}{catch\-\_\-signal} (int sig)
-\item 
 int \hyperlink{intro__watchdog_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Routine appelée au chargement du module. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
@@ -70,12 +73,27 @@ int \hyperlink{intro__watchdog_8c_a636e472148d1958b49ee780a6a7e8b6a}{installed\-
 \item 
 int \hyperlink{intro__watchdog_8c_adfb8f7fdbe38f6caded7a98f00ae6de8}{installed\-\_\-task3} = 0
 \item 
-R\-T\-\_\-\-T\-A\-S\-K \hyperlink{intro__watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}{watchdog\-Task}
+R\-T\-\_\-\-S\-E\-M \hyperlink{intro__watchdog_8c_af584cd209690209697a7bfb50274c8a2}{barrier}
 \end{DoxyCompactItemize}
 
 
 \subsection{Description détaillée}
 Application pour l'introduction aux concept de tâche. \begin{DoxyAuthor}{Auteur}
+Y. Thoma 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-3 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+08 novembre 2019
+\end{DoxyDate}
+Ce laboratoire permet de tester les mécanismes de base de l'exécutif Xenomai pour la création et la gestion de tâches temps-\/réel. Il met également en place un watchdog qui pourrait être exploité s'il n'existe pas de détection de surcharge au niveau du noyau.
+
+Code Xenomai 3.\-0
+
+Modif \-: Spinelli Isaia \-: Modification de periodic\-Task2 afin d'augmenter la charge C\-P\-U (+20) de cette tâche à chaque fois qu'elle se sera executée 20 fois. Pour faire simple ces valeurs sont constante (\#\-D\-E\-F\-I\-N\-E).
+
+\begin{DoxyAuthor}{Auteur}
 Y. Thoma 
 \end{DoxyAuthor}
 \begin{DoxyVersion}{Version}
@@ -93,12 +111,23 @@ Définition dans le fichier \hyperlink{intro__watchdog_8c_source}{intro\-\_\-wat
 
 
 \subsection{Documentation des macros}
+\hypertarget{intro__watchdog_8c_a8585301c96c9164f4f3e17f9c3e5fb7c}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D@{C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D}}
+\index{C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D@{C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
+\subsubsection[{C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D~20}}\label{intro__watchdog_8c_a8585301c96c9164f4f3e17f9c3e5fb7c}
+Augmentation de la charge C\-P\-U de la tâche 2 après N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2 execution de la tâche 2 
+
+Définition à la ligne 51 du fichier intro\-\_\-watchdog.\-c.
+
+
+
+Référencé par periodic\-Task2().
+
 \hypertarget{intro__watchdog_8c_a077d3c6393a056af8e6585ab611bd862}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!C\-P\-U\-\_\-\-T\-A\-S\-K1@{C\-P\-U\-\_\-\-T\-A\-S\-K1}}
 \index{C\-P\-U\-\_\-\-T\-A\-S\-K1@{C\-P\-U\-\_\-\-T\-A\-S\-K1}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
-\subsubsection[{C\-P\-U\-\_\-\-T\-A\-S\-K1}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-P\-U\-\_\-\-T\-A\-S\-K1~100}}\label{intro__watchdog_8c_a077d3c6393a056af8e6585ab611bd862}
+\subsubsection[{C\-P\-U\-\_\-\-T\-A\-S\-K1}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-P\-U\-\_\-\-T\-A\-S\-K1~50}}\label{intro__watchdog_8c_a077d3c6393a056af8e6585ab611bd862}
 Temps de traitement de la tâche 1 
 
-Définition à la ligne 37 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 43 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -106,10 +135,10 @@ Référencé par periodic\-Task1().
 
 \hypertarget{intro__watchdog_8c_aa9a486bfc538e8667a8c7866bfe806c5}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!C\-P\-U\-\_\-\-T\-A\-S\-K2@{C\-P\-U\-\_\-\-T\-A\-S\-K2}}
 \index{C\-P\-U\-\_\-\-T\-A\-S\-K2@{C\-P\-U\-\_\-\-T\-A\-S\-K2}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
-\subsubsection[{C\-P\-U\-\_\-\-T\-A\-S\-K2}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-P\-U\-\_\-\-T\-A\-S\-K2~160}}\label{intro__watchdog_8c_aa9a486bfc538e8667a8c7866bfe806c5}
-Temps de traitement de la tâche 2 160 limite 
+\subsubsection[{C\-P\-U\-\_\-\-T\-A\-S\-K2}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-P\-U\-\_\-\-T\-A\-S\-K2~100}}\label{intro__watchdog_8c_aa9a486bfc538e8667a8c7866bfe806c5}
+Temps de traitement de la tâche 2 
 
-Définition à la ligne 38 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 44 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -120,18 +149,29 @@ Référencé par periodic\-Task2().
 \subsubsection[{C\-P\-U\-\_\-\-T\-A\-S\-K3}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-P\-U\-\_\-\-T\-A\-S\-K3~100}}\label{intro__watchdog_8c_ab5bec16e307935bf9d9f650a60a7a160}
 Temps de traitement de la tâche 3 
 
-Définition à la ligne 39 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 45 du fichier intro\-\_\-watchdog.\-c.
 
 
 
 Référencé par periodic\-Task3().
+
+\hypertarget{intro__watchdog_8c_a1cb38e9410f16a8ac6ea7b0746679a9a}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2@{N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2}}
+\index{N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2@{N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
+\subsubsection[{N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2~20}}\label{intro__watchdog_8c_a1cb38e9410f16a8ac6ea7b0746679a9a}
+Nombre de fois de l'execution de la tâche 2 avant l'ajout de la charge C\-P\-U 
+
+Définition à la ligne 52 du fichier intro\-\_\-watchdog.\-c.
+
+
+
+Référencé par periodic\-Task2().
 
 \hypertarget{intro__watchdog_8c_a787150db05698988ec7d248669492551}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1@{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1}}
 \index{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1@{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
 \subsubsection[{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1~1000}}\label{intro__watchdog_8c_a787150db05698988ec7d248669492551}
 Période de la tâche 1 
 
-Définition à la ligne 33 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 39 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -142,7 +182,7 @@ Référencé par periodic\-Task1().
 \subsubsection[{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K2}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K2~200}}\label{intro__watchdog_8c_accd6acc6b57e4c1d71e2b39b91aa8918}
 Période de la tâche 2 
 
-Définition à la ligne 34 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 40 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -153,7 +193,7 @@ Référencé par periodic\-Task2().
 \subsubsection[{P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K3}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K3~4000}}\label{intro__watchdog_8c_a8321ffc110a65cd7342d8a9445c2e9fb}
 Période de la tâche 3 
 
-Définition à la ligne 35 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 41 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -164,7 +204,7 @@ Référencé par periodic\-Task3().
 \subsubsection[{P\-R\-I\-O\-\_\-\-T\-A\-S\-K1}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-I\-O\-\_\-\-T\-A\-S\-K1~10}}\label{intro__watchdog_8c_afa51dfe428af89277bfdcdf58bc78006}
 Priorité de la tâche 1=faible, 99=forte 
 
-Définition à la ligne 41 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 47 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -175,7 +215,7 @@ Référencé par main().
 \subsubsection[{P\-R\-I\-O\-\_\-\-T\-A\-S\-K2}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-I\-O\-\_\-\-T\-A\-S\-K2~15}}\label{intro__watchdog_8c_a6186a07149167b4bddc474332080c9a5}
 Priorité de la tâche 1=faible, 99=forte 
 
-Définition à la ligne 42 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 48 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -186,7 +226,7 @@ Référencé par main().
 \subsubsection[{P\-R\-I\-O\-\_\-\-T\-A\-S\-K3}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-I\-O\-\_\-\-T\-A\-S\-K3~20}}\label{intro__watchdog_8c_a31deafe2f33f39edb8e058212526e572}
 Priorité de la tâche 1=faible, 99=forte 
 
-Définition à la ligne 43 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 49 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -195,25 +235,6 @@ Référencé par main().
 
 
 \subsection{Documentation des fonctions}
-\hypertarget{intro__watchdog_8c_af2dc378d0481adcc49b61efb98493a9b}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!catch\-\_\-signal@{catch\-\_\-signal}}
-\index{catch\-\_\-signal@{catch\-\_\-signal}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
-\subsubsection[{catch\-\_\-signal}]{\setlength{\rightskip}{0pt plus 5cm}void catch\-\_\-signal (
-\begin{DoxyParamCaption}
-\item[{int}]{sig}
-\end{DoxyParamCaption}
-)}}\label{intro__watchdog_8c_af2dc378d0481adcc49b61efb98493a9b}
-
-
-Définition à la ligne 190 du fichier intro\-\_\-watchdog.\-c.
-
-
-
-Références cleanup\-\_\-objects().
-
-
-
-Référencé par main().
-
 \hypertarget{intro__watchdog_8c_ab1a58b850c22cba6e6a88319b0243dc4}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!cleanup\-\_\-objects@{cleanup\-\_\-objects}}
 \index{cleanup\-\_\-objects@{cleanup\-\_\-objects}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
 \subsubsection[{cleanup\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}void cleanup\-\_\-objects (
@@ -227,7 +248,7 @@ Routine appelée lors d'un échec de l'initialisation.
 
 Routine de nettoyage des objets alloués. Cette routine est appelée lorsque l'initialisation a échoué. 
 
-Définition à la ligne 259 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 276 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -235,7 +256,7 @@ Références end\-\_\-watchdog(), installed\-\_\-task1, installed\-\_\-task2, in
 
 
 
-Référencé par catch\-\_\-signal(), et main().
+Référencé par main().
 
 \hypertarget{intro__watchdog_8c_a0ddf1224851353fc92bfbff6f499fa97}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!main@{main}}
 \index{main@{main}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
@@ -251,11 +272,11 @@ Routine appelée au chargement du module.
 
 Cette routine est appelé lors du chargement du module dans l'espace noyau. C'est le point d'entrée de notre application temps-\/réel. 
 
-Définition à la ligne 200 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 214 du fichier intro\-\_\-watchdog.\-c.
 
 
 
-Références catch\-\_\-signal(), cleanup\-\_\-objects(), installed\-\_\-task1, installed\-\_\-task2, installed\-\_\-task3, my\-Task1, my\-Task2, my\-Task3, periodic\-Task1(), periodic\-Task2(), periodic\-Task3(), P\-R\-I\-O\-\_\-\-T\-A\-S\-K1, P\-R\-I\-O\-\_\-\-T\-A\-S\-K2, P\-R\-I\-O\-\_\-\-T\-A\-S\-K3, S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E, start\-\_\-watchdog(), et suspend().
+Références barrier, cleanup\-\_\-objects(), installed\-\_\-task1, installed\-\_\-task2, installed\-\_\-task3, my\-Task1, my\-Task2, my\-Task3, periodic\-Task1(), periodic\-Task2(), periodic\-Task3(), P\-R\-I\-O\-\_\-\-T\-A\-S\-K1, P\-R\-I\-O\-\_\-\-T\-A\-S\-K2, P\-R\-I\-O\-\_\-\-T\-A\-S\-K3, S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E, start\-\_\-watchdog(), et suspend().
 
 \hypertarget{intro__watchdog_8c_a0b73f148b53c447692d4fb18b9d6704e}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!periodic\-Task1@{periodic\-Task1}}
 \index{periodic\-Task1@{periodic\-Task1}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
@@ -279,7 +300,7 @@ Définition à la ligne 94 du fichier intro\-\_\-watchdog.\-c.
 
 
 
-Références busy\-\_\-cpu(), C\-P\-U\-\_\-\-T\-A\-S\-K1, M\-S, my\-Task1, et P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1.
+Références barrier, busy\-\_\-cpu(), C\-P\-U\-\_\-\-T\-A\-S\-K1, M\-S, my\-Task1, et P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K1.
 
 
 
@@ -303,11 +324,11 @@ La fonction busy\-\_\-cpu(..) permet de consommer (inutilement) du temps C\-P\-U
 \end{DoxyParams}
 
 
-Définition à la ligne 128 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 133 du fichier intro\-\_\-watchdog.\-c.
 
 
 
-Références busy\-\_\-cpu(), C\-P\-U\-\_\-\-T\-A\-S\-K2, M\-S, my\-Task2, P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K2, et watchdog\-Task.
+Références barrier, busy\-\_\-cpu(), C\-H\-A\-R\-G\-E\-\_\-\-C\-P\-U\-\_\-\-T\-A\-S\-K2\-\_\-\-A\-D\-D, C\-P\-U\-\_\-\-T\-A\-S\-K2, M\-S, my\-Task2, N\-\_\-\-F\-O\-I\-S\-\_\-\-T\-A\-S\-K2, et P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K2.
 
 
 
@@ -331,11 +352,11 @@ La fonction busy\-\_\-cpu(..) permet de consommer (inutilement) du temps C\-P\-U
 \end{DoxyParams}
 
 
-Définition à la ligne 164 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 179 du fichier intro\-\_\-watchdog.\-c.
 
 
 
-Références busy\-\_\-cpu(), C\-P\-U\-\_\-\-T\-A\-S\-K3, M\-S, my\-Task3, et P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K3.
+Références barrier, busy\-\_\-cpu(), C\-P\-U\-\_\-\-T\-A\-S\-K3, M\-S, my\-Task3, et P\-E\-R\-I\-O\-D\-\_\-\-T\-A\-S\-K3.
 
 
 
@@ -350,7 +371,7 @@ Référencé par main().
 )}}\label{intro__watchdog_8c_acf110e07a416e636772e6ba9c3246ebb}
 
 
-Définition à la ligne 58 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 66 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -363,12 +384,23 @@ Référencé par main().
 
 
 \subsection{Documentation des variables}
+\hypertarget{intro__watchdog_8c_af584cd209690209697a7bfb50274c8a2}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!barrier@{barrier}}
+\index{barrier@{barrier}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
+\subsubsection[{barrier}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-S\-E\-M barrier}}\label{intro__watchdog_8c_af584cd209690209697a7bfb50274c8a2}
+
+
+Définition à la ligne 62 du fichier intro\-\_\-watchdog.\-c.
+
+
+
+Référencé par main(), periodic\-Task1(), periodic\-Task2(), et periodic\-Task3().
+
 \hypertarget{intro__watchdog_8c_a34b7c3609e8064f37e03462f5d16f107}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!installed\-\_\-task1@{installed\-\_\-task1}}
 \index{installed\-\_\-task1@{installed\-\_\-task1}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
 \subsubsection[{installed\-\_\-task1}]{\setlength{\rightskip}{0pt plus 5cm}int installed\-\_\-task1 = 0}}\label{intro__watchdog_8c_a34b7c3609e8064f37e03462f5d16f107}
 Indique si la tâche 1 est chargée dans le module 
 
-Définition à la ligne 49 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 58 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -379,7 +411,7 @@ Référencé par cleanup\-\_\-objects(), main(), et suspend().
 \subsubsection[{installed\-\_\-task2}]{\setlength{\rightskip}{0pt plus 5cm}int installed\-\_\-task2 = 0}}\label{intro__watchdog_8c_a636e472148d1958b49ee780a6a7e8b6a}
 Indique si la tâche 2 est chargée dans le module 
 
-Définition à la ligne 50 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 59 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -388,9 +420,9 @@ Référencé par cleanup\-\_\-objects(), main(), et suspend().
 \hypertarget{intro__watchdog_8c_adfb8f7fdbe38f6caded7a98f00ae6de8}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!installed\-\_\-task3@{installed\-\_\-task3}}
 \index{installed\-\_\-task3@{installed\-\_\-task3}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
 \subsubsection[{installed\-\_\-task3}]{\setlength{\rightskip}{0pt plus 5cm}int installed\-\_\-task3 = 0}}\label{intro__watchdog_8c_adfb8f7fdbe38f6caded7a98f00ae6de8}
-Indique si la tâche 3 est chargée dans le module Descripteur de la tâche watchdog afin de verifier sa priorité 
+Indique si la tâche 3 est chargée dans le module 
 
-Définition à la ligne 51 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 60 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -401,7 +433,7 @@ Référencé par cleanup\-\_\-objects(), main(), et suspend().
 \subsubsection[{my\-Task1}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K my\-Task1}}\label{intro__watchdog_8c_a203a0e1b2b2dde69961fd563460d364f}
 Descripteur de la tâche périodique 1 
 
-Définition à la ligne 45 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 54 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -412,7 +444,7 @@ Référencé par cleanup\-\_\-objects(), main(), periodic\-Task1(), et suspend()
 \subsubsection[{my\-Task2}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K my\-Task2}}\label{intro__watchdog_8c_af0b3b175cf093a0c6ab5f67f09417fcd}
 Descripteur de la tâche périodique 2 
 
-Définition à la ligne 46 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 55 du fichier intro\-\_\-watchdog.\-c.
 
 
 
@@ -423,20 +455,9 @@ Référencé par cleanup\-\_\-objects(), main(), periodic\-Task2(), et suspend()
 \subsubsection[{my\-Task3}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K my\-Task3}}\label{intro__watchdog_8c_aa8c6452d9f64232584e366ab95128992}
 Descripteur de la tâche périodique 3 
 
-Définition à la ligne 47 du fichier intro\-\_\-watchdog.\-c.
+Définition à la ligne 56 du fichier intro\-\_\-watchdog.\-c.
 
 
 
 Référencé par cleanup\-\_\-objects(), main(), periodic\-Task3(), et suspend().
-
-\hypertarget{intro__watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}{\index{intro\-\_\-watchdog.\-c@{intro\-\_\-watchdog.\-c}!watchdog\-Task@{watchdog\-Task}}
-\index{watchdog\-Task@{watchdog\-Task}!intro_watchdog.c@{intro\-\_\-watchdog.\-c}}
-\subsubsection[{watchdog\-Task}]{\setlength{\rightskip}{0pt plus 5cm}R\-T\-\_\-\-T\-A\-S\-K watchdog\-Task}}\label{intro__watchdog_8c_a6b9e125477c8ef9ed90e496cfe74aac6}
-Descripteur de la tâche watchdog visible pour intro\-\_\-watchdog pour check sa priorité 
-
-Définition à la ligne 54 du fichier intro\-\_\-watchdog.\-c.
-
-
-
-Référencé par end\-\_\-watchdog(), periodic\-Task2(), start\-\_\-watchdog(), et watchdog().
 

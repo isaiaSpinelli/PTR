@@ -13,6 +13,11 @@
 * de surcharge au niveau du noyau.
 *
 * Code Xenomai 3.0
+* 
+* Modif : Spinelli Isaia :
+* Modification de periodicTask2 afin d'augmenter la charge CPU (+20) de cette tâche 
+* à chaque fois qu'elle se sera executée 20 fois. Pour faire simple ces valeurs sont 
+* constante (#DEFINE).
 *
 */
 
@@ -42,6 +47,9 @@
 #define PRIO_TASK1         10    /**< Priorité de la tâche 1=faible, 99=forte */
 #define PRIO_TASK2         15    /**< Priorité de la tâche 1=faible, 99=forte */
 #define PRIO_TASK3         20    /**< Priorité de la tâche 1=faible, 99=forte */
+
+#define CHARGE_CPU_TASK2_ADD        20    /**< Augmentation de la charge CPU de la tâche 2 après N_FOIS_TASK2 execution de la tâche 2*/
+#define N_FOIS_TASK2         		20    /**< Nombre de fois de l'execution de la tâche 2 avant l'ajout de la charge CPU */
 
 RT_TASK myTask1;  /**< Descripteur de la tâche périodique 1 */
 RT_TASK myTask2;  /**< Descripteur de la tâche périodique 2 */
@@ -123,6 +131,9 @@ void periodicTask1(void *cookie) {
 * \param cookie Non utilisé
 */
 void periodicTask2(void *cookie) {
+	/* Compteur afin d'augmenter la surcharge après un certain temps*/
+	static unsigned long compteurSurcharge = 0;
+	static unsigned long cpu_Charge = CPU_TASK2;
 
   rt_sem_p(&barrier, TM_INFINITE);
 
@@ -143,7 +154,13 @@ void periodicTask2(void *cookie) {
 
     /* simulation traitement */
     rt_printf("Periodic task 2: starts execution\n");
-    busy_cpu(CPU_TASK2);
+    /* Après l'execution de N_FOIS_TASK2 fois de la tâche 2, augmente sa charge CPU de CHARGE_CPU_TASK2_ADD */
+    if ( ++compteurSurcharge > N_FOIS_TASK2) {
+		rt_printf("SURCHARGE task 2 ! (+%d)\n",CHARGE_CPU_TASK2_ADD);
+		cpu_Charge += CHARGE_CPU_TASK2_ADD;
+		compteurSurcharge = 0;
+	}
+    busy_cpu(cpu_Charge);
     rt_printf("Periodic task 2: end of execution\n");
 
     rt_task_wait_period(NULL);

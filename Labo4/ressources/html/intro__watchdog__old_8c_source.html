@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Ordonnancement:  Fichier source de intro_watchdog_old.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Ordonnancement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_6fa16f978620865338af57c72fd06fd2.html">cours_REDS</a></li><li class="navelem"><a class="el" href="dir_6cb35e5b62d7ed9ba9811bbe2d8c4ac1.html">PTR</a></li><li class="navelem"><a class="el" href="dir_b8f9f851cd7b1bfd125e3fb94868d334.html">isaiaSpinelli</a></li><li class="navelem"><a class="el" href="dir_72c92aaceb08b96c1580f4e34a8a11ff.html">PTR</a></li><li class="navelem"><a class="el" href="dir_aef0690d60a4e5a411747127bcf3a692.html">Labo4</a></li><li class="navelem"><a class="el" href="dir_f9bc5ddab4c6a1ce03f7c2fcedeffb44.html">ressources</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">intro_watchdog_old.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="intro__watchdog__old_8c.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;sys/mman.h&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;alchemy/task.h&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;alchemy/timer.h&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="general_8h.html">general.h</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="busycpu_8h.html">busycpu.h</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="watchdog_8h.html">watchdog.h</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a787150db05698988ec7d248669492551">   33</a></span>&#160;<span class="preprocessor">#define PERIOD_TASK1       1000        </span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918">   34</a></span>&#160;<span class="preprocessor">#define PERIOD_TASK2       200         </span></div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb">   35</a></span>&#160;<span class="preprocessor">#define PERIOD_TASK3       4000        </span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a077d3c6393a056af8e6585ab611bd862">   37</a></span>&#160;<span class="preprocessor">#define CPU_TASK1          100          </span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#aa9a486bfc538e8667a8c7866bfe806c5">   38</a></span>&#160;<span class="preprocessor">#define CPU_TASK2          160         </span></div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#ab5bec16e307935bf9d9f650a60a7a160">   39</a></span>&#160;<span class="preprocessor">#define CPU_TASK3          100         </span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#afa51dfe428af89277bfdcdf58bc78006">   41</a></span>&#160;<span class="preprocessor">#define PRIO_TASK1         10    </span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a6186a07149167b4bddc474332080c9a5">   42</a></span>&#160;<span class="preprocessor">#define PRIO_TASK2         15    </span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a31deafe2f33f39edb8e058212526e572">   43</a></span>&#160;<span class="preprocessor">#define PRIO_TASK3         20    </span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">   45</a></span>&#160;<span class="preprocessor">RT_TASK myTask1;  </span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">   46</a></span>&#160;<span class="preprocessor">RT_TASK myTask2;  </span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">   47</a></span>&#160;<span class="preprocessor">RT_TASK myTask3;  </span></div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">   49</a></span>&#160;<span class="preprocessor">int installed_task1 = 0; </span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">   50</a></span>&#160;<span class="preprocessor">int installed_task2 = 0; </span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">   51</a></span>&#160;<span class="preprocessor">int installed_task3 = 0; </span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6">   54</a></span>&#160;<span class="preprocessor">RT_TASK watchdogTask;  </span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">cleanup_objects</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb">   58</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb">suspend</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">int</span> err = 0;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">//rt_printf(&quot;Suspending the tasks\n&quot;);</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  rt_printf(<span class="stringliteral">&quot;************************ Suspending the tasks *************************\n&quot;</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">installed_task2</a>) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    rt_printf(<span class="stringliteral">&quot;Deleting task 2\n&quot;</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    err = rt_task_delete(&amp;<a class="code" href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">myTask2</a>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">installed_task2</a>=0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">installed_task1</a>) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    rt_printf(<span class="stringliteral">&quot;Deleting task 1\n&quot;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    err = rt_task_delete(&amp;<a class="code" href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">myTask1</a>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">installed_task1</a>=0;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">installed_task3</a>) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    rt_printf(<span class="stringliteral">&quot;Deleting task 3\n&quot;</span>);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    rt_task_delete(&amp;<a class="code" href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">myTask3</a>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">installed_task3</a>=0;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e">   94</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e">periodicTask1</a>(<span class="keywordtype">void</span> *cookie) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="comment">/* Configuration de la tâche périodique */</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  RTIME period = ((RTIME)<a class="code" href="intro__watchdog__old_8c.html#a787150db05698988ec7d248669492551">PERIOD_TASK1</a>)*((RTIME)<a class="code" href="busycpu_8c.html#ab9e061e05d689a5769936b213022102f">MS</a>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">int</span> err = rt_task_set_periodic(&amp;<a class="code" href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">myTask1</a>, rt_timer_read() + period, period);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    printf(<span class="stringliteral">&quot;task set periodic failed: %s\n&quot;</span>, strerror(-err));</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  rt_printf(<span class="stringliteral">&quot;Starting periodic task 1\n&quot;</span>, TM_NOW);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="comment">/* simulation traitement */</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    rt_printf(<span class="stringliteral">&quot;Periodic task 1: starts execution\n&quot;</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="busycpu_8c.html#a3b276abfdbad9248e08d28e6b95920b9">busy_cpu</a>(<a class="code" href="intro__watchdog__old_8c.html#a077d3c6393a056af8e6585ab611bd862">CPU_TASK1</a>);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    rt_printf(<span class="stringliteral">&quot;Periodic task 1: end of execution\n&quot;</span>);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    rt_task_wait_period(NULL);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d">  128</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d">periodicTask2</a>(<span class="keywordtype">void</span> *cookie) {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="comment">/* Configuration de la tâche périodique */</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  RTIME period = ((RTIME)<a class="code" href="intro__watchdog__old_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918">PERIOD_TASK2</a>)*((RTIME)<a class="code" href="busycpu_8c.html#ab9e061e05d689a5769936b213022102f">MS</a>);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  RT_TASK_INFO infoWatchdog ;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordtype">int</span> err = rt_task_set_periodic(&amp;<a class="code" href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">myTask2</a>, rt_timer_read() + period, period);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    printf(<span class="stringliteral">&quot;task set periodic failed: %s\n&quot;</span>, strerror(-err));</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  rt_printf(<span class="stringliteral">&quot;Starting periodic task 2\n&quot;</span>, TM_NOW);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="comment">/* simulation traitement */</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    rt_printf(<span class="stringliteral">&quot;Periodic task 2: starts execution\n&quot;</span>);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="comment">/* Récupère et affiche la priorité du watchdog */</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    rt_task_inquire(&amp;<a class="code" href="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6">watchdogTask</a>, &amp;infoWatchdog );     </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    rt_printf(<span class="stringliteral">&quot;Priority Watchdog = %d \n&quot;</span>, infoWatchdog.prio);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <a class="code" href="busycpu_8c.html#a3b276abfdbad9248e08d28e6b95920b9">busy_cpu</a>(<a class="code" href="intro__watchdog__old_8c.html#aa9a486bfc538e8667a8c7866bfe806c5">CPU_TASK2</a>);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    rt_printf(<span class="stringliteral">&quot;Periodic task 2: end of execution\n&quot;</span>);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    rt_task_wait_period(NULL);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  }</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a">  164</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a">periodicTask3</a>(<span class="keywordtype">void</span> *cookie) {</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="comment">/* Configuration de la tâche périodique */</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  RTIME period = ((RTIME)<a class="code" href="intro__watchdog__old_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb">PERIOD_TASK3</a>)*((RTIME)<a class="code" href="busycpu_8c.html#ab9e061e05d689a5769936b213022102f">MS</a>);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordtype">int</span> err = rt_task_set_periodic(&amp;<a class="code" href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">myTask3</a>, rt_timer_read() + period, period);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    printf(<span class="stringliteral">&quot;task set periodic failed: %s\n&quot;</span>, strerror(-err));</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  }</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  rt_printf(<span class="stringliteral">&quot;Starting periodic task 3\n&quot;</span>, TM_NOW);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <span class="keywordflow">while</span> (1) {</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="comment">/* simulation traitement */</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    rt_printf(<span class="stringliteral">&quot;Periodic task 3: starts execution\n&quot;</span>);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="busycpu_8c.html#a3b276abfdbad9248e08d28e6b95920b9">busy_cpu</a>(<a class="code" href="intro__watchdog__old_8c.html#ab5bec16e307935bf9d9f650a60a7a160">CPU_TASK3</a>);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    rt_printf(<span class="stringliteral">&quot;Periodic task 3: end of execution\n&quot;</span>);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    rt_task_wait_period(NULL);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b">  190</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b">catch_signal</a>(<span class="keywordtype">int</span> sig)</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;{</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <a class="code" href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">cleanup_objects</a>();</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#a0ddf1224851353fc92bfbff6f499fa97">  200</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="intro__watchdog__old_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keywordtype">int</span> err; <span class="comment">/* stockage du code d&#39;erreur */</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  printf(<span class="stringliteral">&quot;***********Initialisation***********\n&quot;</span>);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  signal(SIGTERM, <a class="code" href="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b">catch_signal</a>);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  signal(SIGINT, <a class="code" href="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b">catch_signal</a>);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="comment">/* Avoids memory swapping for this program */</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  mlockall(MCL_CURRENT|MCL_FUTURE);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="watchdog_8c.html#a43d4cb080f06759f94e2502653267943">start_watchdog</a>(<a class="code" href="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb">suspend</a>) != 1)</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordflow">goto</span> fail;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="comment">/* Création de la tâche périodique 1 */</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  err =  rt_task_spawn (&amp;<a class="code" href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">myTask1</a>, <span class="stringliteral">&quot;myTask1&quot;</span>, <a class="code" href="general_8h.html#a6423a880df59733d2d9b509c7718d3a9">STACK_SIZE</a>, <a class="code" href="intro__watchdog__old_8c.html#afa51dfe428af89277bfdcdf58bc78006">PRIO_TASK1</a>, 0, <a class="code" href="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e">periodicTask1</a>, 0);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    printf(<span class="stringliteral">&quot;task 1 creation failed: %s\n&quot;</span>, strerror(-err));</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">goto</span> fail;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  }</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <a class="code" href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">installed_task1</a>=1;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="comment">/* Création de la tâche périodique 2 */</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  err =  rt_task_spawn (&amp;<a class="code" href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">myTask2</a>, <span class="stringliteral">&quot;myTask2&quot;</span>, <a class="code" href="general_8h.html#a6423a880df59733d2d9b509c7718d3a9">STACK_SIZE</a>, <a class="code" href="intro__watchdog__old_8c.html#a6186a07149167b4bddc474332080c9a5">PRIO_TASK2</a>, 0, <a class="code" href="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d">periodicTask2</a>, 0);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    printf(<span class="stringliteral">&quot;task 2 creation failed: %s\n&quot;</span>, strerror(-err));</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">goto</span> fail;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  }</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <a class="code" href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">installed_task2</a>=1;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  <span class="comment">/* Création de la tâche périodique 3 */</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  err =  rt_task_spawn (&amp;<a class="code" href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">myTask3</a>, <span class="stringliteral">&quot;myTask3&quot;</span>, <a class="code" href="general_8h.html#a6423a880df59733d2d9b509c7718d3a9">STACK_SIZE</a>, <a class="code" href="intro__watchdog__old_8c.html#a31deafe2f33f39edb8e058212526e572">PRIO_TASK3</a>, 0, <a class="code" href="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a">periodicTask3</a>, 0);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="keywordflow">if</span> (err != 0) {</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    printf(<span class="stringliteral">&quot;task 3 creation failed: %s\n&quot;</span>, strerror(-err));</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">goto</span> fail;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  }</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  <a class="code" href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">installed_task3</a>=1;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  pause();</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  fail:</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <a class="code" href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">cleanup_objects</a>();</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;}</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">  259</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">cleanup_objects</a> (<span class="keywordtype">void</span>) {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  printf(<span class="stringliteral">&quot;intro_watchdog: objects destruction\n&quot;</span>);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="comment">/* Destruction du watchdog */</span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  <a class="code" href="watchdog_8c.html#a231bef0c019032cf16844f46efe9f4a7">end_watchdog</a>();</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  <span class="comment">/* Destruction des objets dans l&#39;ordre inverse de leur création</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="comment">  * afin d&#39;éviter tout problème de dépendance entre les objets */</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">installed_task3</a>)</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    rt_task_delete(&amp;<a class="code" href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">myTask3</a>);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">installed_task2</a>)</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    rt_task_delete(&amp;<a class="code" href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">myTask2</a>);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">installed_task1</a>)</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    rt_task_delete(&amp;<a class="code" href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">myTask1</a>);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  printf(<span class="stringliteral">&quot;intro_watchdog : bye bye!\n&quot;</span>);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;}</div>
+<div class="ttc" id="intro__watchdog__old_8c_html_aa8c6452d9f64232584e366ab95128992"><div class="ttname"><a href="intro__watchdog__old_8c.html#aa8c6452d9f64232584e366ab95128992">myTask3</a></div><div class="ttdeci">RT_TASK myTask3</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00047">intro_watchdog_old.c:47</a></div></div>
+<div class="ttc" id="general_8h_html_a6423a880df59733d2d9b509c7718d3a9"><div class="ttname"><a href="general_8h.html#a6423a880df59733d2d9b509c7718d3a9">STACK_SIZE</a></div><div class="ttdeci">#define STACK_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="general_8h_source.html#l00002">general.h:2</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="intro__watchdog__old_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdoc">Routine appelée au chargement du module. </div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00200">intro_watchdog_old.c:200</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_ab5bec16e307935bf9d9f650a60a7a160"><div class="ttname"><a href="intro__watchdog__old_8c.html#ab5bec16e307935bf9d9f650a60a7a160">CPU_TASK3</a></div><div class="ttdeci">#define CPU_TASK3</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00039">intro_watchdog_old.c:39</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_af0b3b175cf093a0c6ab5f67f09417fcd"><div class="ttname"><a href="intro__watchdog__old_8c.html#af0b3b175cf093a0c6ab5f67f09417fcd">myTask2</a></div><div class="ttdeci">RT_TASK myTask2</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00046">intro_watchdog_old.c:46</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a6186a07149167b4bddc474332080c9a5"><div class="ttname"><a href="intro__watchdog__old_8c.html#a6186a07149167b4bddc474332080c9a5">PRIO_TASK2</a></div><div class="ttdeci">#define PRIO_TASK2</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00042">intro_watchdog_old.c:42</a></div></div>
+<div class="ttc" id="watchdog_8h_html"><div class="ttname"><a href="watchdog_8h.html">watchdog.h</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a31deafe2f33f39edb8e058212526e572"><div class="ttname"><a href="intro__watchdog__old_8c.html#a31deafe2f33f39edb8e058212526e572">PRIO_TASK3</a></div><div class="ttdeci">#define PRIO_TASK3</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00043">intro_watchdog_old.c:43</a></div></div>
+<div class="ttc" id="watchdog_8c_html_a43d4cb080f06759f94e2502653267943"><div class="ttname"><a href="watchdog_8c.html#a43d4cb080f06759f94e2502653267943">start_watchdog</a></div><div class="ttdeci">int start_watchdog(void(*suspend_func)(void))</div><div class="ttdoc">Démarre le watchdog. </div><div class="ttdef"><b>Definition:</b> <a href="watchdog_8c_source.html#l00120">watchdog.c:120</a></div></div>
+<div class="ttc" id="busycpu_8c_html_ab9e061e05d689a5769936b213022102f"><div class="ttname"><a href="busycpu_8c.html#ab9e061e05d689a5769936b213022102f">MS</a></div><div class="ttdeci">#define MS</div><div class="ttdef"><b>Definition:</b> <a href="busycpu_8c_source.html#l00023">busycpu.c:23</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_accd6acc6b57e4c1d71e2b39b91aa8918"><div class="ttname"><a href="intro__watchdog__old_8c.html#accd6acc6b57e4c1d71e2b39b91aa8918">PERIOD_TASK2</a></div><div class="ttdeci">#define PERIOD_TASK2</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00034">intro_watchdog_old.c:34</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_aa9a486bfc538e8667a8c7866bfe806c5"><div class="ttname"><a href="intro__watchdog__old_8c.html#aa9a486bfc538e8667a8c7866bfe806c5">CPU_TASK2</a></div><div class="ttdeci">#define CPU_TASK2</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00038">intro_watchdog_old.c:38</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a203a0e1b2b2dde69961fd563460d364f"><div class="ttname"><a href="intro__watchdog__old_8c.html#a203a0e1b2b2dde69961fd563460d364f">myTask1</a></div><div class="ttdeci">RT_TASK myTask1</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00045">intro_watchdog_old.c:45</a></div></div>
+<div class="ttc" id="watchdog_8c_html_a231bef0c019032cf16844f46efe9f4a7"><div class="ttname"><a href="watchdog_8c.html#a231bef0c019032cf16844f46efe9f4a7">end_watchdog</a></div><div class="ttdeci">int end_watchdog(void)</div><div class="ttdoc">Termine les deux tâches du watchdog. </div><div class="ttdef"><b>Definition:</b> <a href="watchdog_8c_source.html#l00153">watchdog.c:153</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a8321ffc110a65cd7342d8a9445c2e9fb"><div class="ttname"><a href="intro__watchdog__old_8c.html#a8321ffc110a65cd7342d8a9445c2e9fb">PERIOD_TASK3</a></div><div class="ttdeci">#define PERIOD_TASK3</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00035">intro_watchdog_old.c:35</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a6b9e125477c8ef9ed90e496cfe74aac6"><div class="ttname"><a href="intro__watchdog__old_8c.html#a6b9e125477c8ef9ed90e496cfe74aac6">watchdogTask</a></div><div class="ttdeci">RT_TASK watchdogTask</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00054">intro_watchdog_old.c:54</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a723bea0262e0c80c771fd0d2f951014d"><div class="ttname"><a href="intro__watchdog__old_8c.html#a723bea0262e0c80c771fd0d2f951014d">periodicTask2</a></div><div class="ttdeci">void periodicTask2(void *cookie)</div><div class="ttdoc">Tâche périodique. </div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00128">intro_watchdog_old.c:128</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a9ac6a360bf56ec4a34749cbc9dbf1b6a"><div class="ttname"><a href="intro__watchdog__old_8c.html#a9ac6a360bf56ec4a34749cbc9dbf1b6a">periodicTask3</a></div><div class="ttdeci">void periodicTask3(void *cookie)</div><div class="ttdoc">Tâche périodique. </div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00164">intro_watchdog_old.c:164</a></div></div>
+<div class="ttc" id="busycpu_8c_html_a3b276abfdbad9248e08d28e6b95920b9"><div class="ttname"><a href="busycpu_8c.html#a3b276abfdbad9248e08d28e6b95920b9">busy_cpu</a></div><div class="ttdeci">void busy_cpu(int ms)</div><div class="ttdoc">Fonction permettant de simuler de l&#39;utilisation de temps CPU. </div><div class="ttdef"><b>Definition:</b> <a href="busycpu_8c_source.html#l00026">busycpu.c:26</a></div></div>
+<div class="ttc" id="general_8h_html"><div class="ttname"><a href="general_8h.html">general.h</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_ab1a58b850c22cba6e6a88319b0243dc4"><div class="ttname"><a href="intro__watchdog__old_8c.html#ab1a58b850c22cba6e6a88319b0243dc4">cleanup_objects</a></div><div class="ttdeci">void cleanup_objects(void)</div><div class="ttdoc">Routine appelée lors d&#39;un échec de l&#39;initialisation. </div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00259">intro_watchdog_old.c:259</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_adfb8f7fdbe38f6caded7a98f00ae6de8"><div class="ttname"><a href="intro__watchdog__old_8c.html#adfb8f7fdbe38f6caded7a98f00ae6de8">installed_task3</a></div><div class="ttdeci">int installed_task3</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00051">intro_watchdog_old.c:51</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a34b7c3609e8064f37e03462f5d16f107"><div class="ttname"><a href="intro__watchdog__old_8c.html#a34b7c3609e8064f37e03462f5d16f107">installed_task1</a></div><div class="ttdeci">int installed_task1</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00049">intro_watchdog_old.c:49</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a0b73f148b53c447692d4fb18b9d6704e"><div class="ttname"><a href="intro__watchdog__old_8c.html#a0b73f148b53c447692d4fb18b9d6704e">periodicTask1</a></div><div class="ttdeci">void periodicTask1(void *cookie)</div><div class="ttdoc">Tâche périodique. </div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00094">intro_watchdog_old.c:94</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a636e472148d1958b49ee780a6a7e8b6a"><div class="ttname"><a href="intro__watchdog__old_8c.html#a636e472148d1958b49ee780a6a7e8b6a">installed_task2</a></div><div class="ttdeci">int installed_task2</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00050">intro_watchdog_old.c:50</a></div></div>
+<div class="ttc" id="busycpu_8h_html"><div class="ttname"><a href="busycpu_8h.html">busycpu.h</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_af2dc378d0481adcc49b61efb98493a9b"><div class="ttname"><a href="intro__watchdog__old_8c.html#af2dc378d0481adcc49b61efb98493a9b">catch_signal</a></div><div class="ttdeci">void catch_signal(int sig)</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00190">intro_watchdog_old.c:190</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_acf110e07a416e636772e6ba9c3246ebb"><div class="ttname"><a href="intro__watchdog__old_8c.html#acf110e07a416e636772e6ba9c3246ebb">suspend</a></div><div class="ttdeci">void suspend(void)</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00058">intro_watchdog_old.c:58</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a787150db05698988ec7d248669492551"><div class="ttname"><a href="intro__watchdog__old_8c.html#a787150db05698988ec7d248669492551">PERIOD_TASK1</a></div><div class="ttdeci">#define PERIOD_TASK1</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00033">intro_watchdog_old.c:33</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_a077d3c6393a056af8e6585ab611bd862"><div class="ttname"><a href="intro__watchdog__old_8c.html#a077d3c6393a056af8e6585ab611bd862">CPU_TASK1</a></div><div class="ttdeci">#define CPU_TASK1</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00037">intro_watchdog_old.c:37</a></div></div>
+<div class="ttc" id="intro__watchdog__old_8c_html_afa51dfe428af89277bfdcdf58bc78006"><div class="ttname"><a href="intro__watchdog__old_8c.html#afa51dfe428af89277bfdcdf58bc78006">PRIO_TASK1</a></div><div class="ttdeci">#define PRIO_TASK1</div><div class="ttdef"><b>Definition:</b> <a href="intro__watchdog__old_8c_source.html#l00041">intro_watchdog_old.c:41</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré le Vendredi 22 Novembre 2019 13:41:30 pour Ordonnancement par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>
