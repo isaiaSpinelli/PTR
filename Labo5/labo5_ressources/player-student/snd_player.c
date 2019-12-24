@@ -25,6 +25,7 @@
 #define MS 1000000		/**< Permet la transformation des periodes(MS) en NS*/
 
 static unsigned int mode = PLAYING;
+static char Vol = VOL_MIDDLE;
 
 struct snd_task_args {
     struct wav_file wf;
@@ -41,10 +42,14 @@ void snd_task(void *cookie)
 {
     struct snd_task_args *args = (struct snd_task_args*)cookie;
     size_t to_write = args->wf.wh.data_size;
+    
     ssize_t write_ret;
     void *audio_datas_p = args->wf.audio_datas;
 
     unsigned int mask_r = 0;
+    /* Permet de modifier le volume des samples */
+    int i=0;
+    int16_t sample_volume[384];
 	
     /* Configuration de la tâche périodique */
 	RTIME period = ((RTIME)PERIOD_SND_TASK)*((RTIME)MS);
@@ -56,17 +61,25 @@ void snd_task(void *cookie)
 	
   
     do {
-        write_ret = write_samples(audio_datas_p, to_write);
+		
+		/* Prepare les datas avec le bon volume */
+		for (i=0; i < 384; ++i){ 
+			sample_volume[i] = map_volume(* ((int16_t*)(audio_datas_p)+i) , Vol);
+		}
+		
+		/* Envoie les data */
+       write_ret = write_samples(sample_volume , to_write);
+  
 
-       
+		/* S'il y a une erreur */
         if (write_ret < 0) {
             rt_printf("Error writing to sound driver\n");
             break;
         }
-
+		/* Met à jour les datas */
         to_write -= write_ret;
         audio_datas_p += write_ret;
-        
+        /* Attend une période */
         rt_task_wait_period(NULL);
         
    
@@ -74,8 +87,10 @@ void snd_task(void *cookie)
 		/* Si on veut stopper la lecture de la musique */ 
 		rt_event_wait(&evenement, 0x1, &mask_r, EV_ALL, TM_NONBLOCK);
 		if ( (mask_r & 0x1) == 0x1 ){
+			/* Clear */
 			mask_r &= ~0x1;
 			rt_event_clear(&evenement, 0x1, NULL);
+			/* Remet à 0 les datas */
 			to_write = args->wf.wh.data_size;
 			audio_datas_p = args->wf.audio_datas;
 		}
@@ -83,6 +98,7 @@ void snd_task(void *cookie)
 		/* S'il faut rewind la musique */
 		rt_event_wait(&evenement, 0x2, &mask_r, EV_ANY, TM_NONBLOCK);
 		if ( (mask_r & 0x2) == 0x2 ){
+			/* Clear */
 			mask_r &= ~0x02;
 			rt_event_clear(&evenement, 0x2, NULL);
 			/* Si la musique ne vas pas boucler */
@@ -98,6 +114,7 @@ void snd_task(void *cookie)
 		/* S'il faut forward la musique */
 		rt_event_wait(&evenement, 0x4, &mask_r, EV_ANY, TM_NONBLOCK);
 		if ( (mask_r & 0x4) == 0x4 ){
+			/* Clear */
 			mask_r &= ~0x4;
 			rt_event_clear(&evenement, 0x4, NULL);
 			/* Si la musique ne vas se finir  */
@@ -133,27 +150,30 @@ void display_task(void *cookie)
 	
   
     do {
-		
+		/* Met à jour l'affichage */
 		set_display_time( minutes, secondes, millis++);
-        
+        /* Attend une période */
         rt_task_wait_period(NULL);
-        
-        
-		
+      
 		
 		/* Si on veut stopper l'affichage du temps */ 
 		rt_event_wait(&evenement, 0x10, &mask_r, EV_ANY, TM_NONBLOCK);
 		if ( (mask_r & 0x10) == 0x10 ){
+			/* Clear */
 			mask_r &= ~0x10;
 			rt_event_clear(&evenement, 0x10, NULL);
+			/* Remet à 0 l'affichage */
 			millis = secondes = minutes = 0;
 		}
 		
 		/* S'il faut rewind l'affichage */
 		rt_event_wait(&evenement, 0x20, &mask_r, EV_ANY, TM_NONBLOCK);
 		if ( (mask_r & 0x20) == 0x20 ){
+			/* Clear */
 			mask_r &= ~0x20;
 			rt_event_clear(&evenement, 0x20, NULL);
+			
+			/* Recule de 10 secondes */
 			if (secondes < 10 && minutes == 0) {
 				secondes = 0;
 				
@@ -171,10 +191,12 @@ void display_task(void *cookie)
 		/* S'il faut forward l'affichage */
 		rt_event_wait(&evenement, 0x40, &mask_r, EV_ANY, TM_NONBLOCK);
 		if ( (mask_r & 0x40) == 0x40 ){
+			/* Clear */
 			mask_r &= ~0x40;
 			rt_event_clear(&evenement, 0x40, NULL);
-			secondes += 10;
 			
+			/* Avance de 10 secondes */
+			secondes += 10;
 			if (secondes >= 60) {
 				secondes = secondes % 60;
 				minutes++;
@@ -209,7 +231,7 @@ void ui_task(void *cookie)
 {
 	uint32_t switch_val, key_val, old_key_val =0;
 	unsigned int modeVol=0;
-	static char Vol = VOL_MIDDLE;
+	//static char Vol = VOL_MIDDLE;
 	//static char mode = PLAYING;
     /* Configuration de la tâche périodique */
 	RTIME period = ((RTIME)PERIOD_UI_TASK)*((RTIME)MS);
@@ -245,15 +267,11 @@ void ui_task(void *cookie)
 		
 		/* Stop (play -> relance depuis le début) */
 		if (is_pressed_now(old_key_val, key_val, KEY1) ){
-			
-			
 			rt_event_signal(&evenement, 0x1);
 			rt_event_signal(&evenement, 0x10);
 			
 			mode = STOPPED;
-			
-			//stopped_snd = 1;
-			//stopped_display = 1;
+
 		} 
 		
 		/* Forward ou Vol+ */
@@ -265,8 +283,6 @@ void ui_task(void *cookie)
 			} else {
 				rt_event_signal(&evenement, 0x4);
 				rt_event_signal(&evenement, 0x40);
-				//forwarded_snd = 1;
-				//forwarded_display = 1;
 			}
 			
 		} 
@@ -279,8 +295,6 @@ void ui_task(void *cookie)
 			} else {
 				rt_event_signal(&evenement, 0x2);
 				rt_event_signal(&evenement, 0x20);
-				//rewind_snd = 1;
-				//rewind_display = 1;
 			}
 		} 
          
