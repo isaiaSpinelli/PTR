@@ -14,10 +14,11 @@
 
 /* Bit offsets for switches */
 #define SW0     0x1
-
+/* Mode du lecteur */
 #define PLAYING 0
 #define PAUSED  1
 #define STOPPED 2
+#define END		3
 
 
 /**
