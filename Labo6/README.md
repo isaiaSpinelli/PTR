@@ -1,7 +1,12 @@
 # PTR Laboratoire 6
 ## Isaïa Spinelli et Tommy Gerardi, le 07.01.2020
 
+Améliroer : Incrémentation du temps (une variable)
+            Play/pause problème resume des taches
+            Magic number
+            Delete example
 
+            
 ### Introduction
 Le but de ce laboratoire est de réaliser un enregistreur audio capable de rejouer ce qui vient d’êtreenregistré, et ce sur une carte DE1-SoC.
 
