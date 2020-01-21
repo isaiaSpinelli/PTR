@@ -18,7 +18,9 @@
 /* Playback and record states */
 #define PLAYING     0
 #define PAUSED      1
-#define RECORDING   2
+#define STOPPED 	2
+#define RECORDING   3
+#define END			4
 
 /* Playback seeking modes */
 #define SEEK_NONE   0
