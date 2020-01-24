@@ -1,3 +1,12 @@
+/*
+ * 
+ * Spinelli Isaia et Gerardi Tommy 
+ * le 26 janvier 2020
+ * 
+ * But : Le but est de réaliser un enregistreur audio capable de 
+ * 			rejouer ce qui vient d’être enregistré
+ */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -48,8 +57,9 @@
 #define FORWARDING_DISPLAY_MASK	0x20	/**< Definit qu'on veut faire un forward de 10s (pour le display)*/
 #define REWINDING_DISPLAY_MASK	0x40	/**< Definit qu'on veut faire un rewind de 10s (pour le display)*/
 #define NEW_RECORDING_MASK		0x80	/**< Definit qu'un nouvel enregistrement débute */
-#define NEW_RECORDING_DISPLAY_MASK		0x100	/**< Definit qu'un nouvel enregistrement (pour le display) */
+#define DISPLAY_RESET_MASK		0x100	/**< Definit qu'un nouvel enregistrement (pour le display) */
 #define END_RECORDING_MASK      0x200	/**< Definit la fin d'un enregistrement */
+#define END_FILE_MASK      		0x400	/**< Definit la fin d'un fichier */
 	
 /* Cette tâche est responsable de jouer les données de son en les envoyant au driver gérant l’audio. La sortie audio est toujours active, que le système soit en enregis-trement ou en lecture. */
 static RT_TASK audio_output_rt_task;
@@ -75,6 +85,7 @@ static RT_SEM task_barrier; 	/**< Sémaphore pour attendre le lancement de toute
 
 struct snd_task_args {
     struct wav_file wf;
+    int audio_fd ;
 };
 
 static char volume = VOL_MIDDLE;   /**< Volume du lecteur */

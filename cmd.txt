@@ -26,7 +26,7 @@ export LD_LIBRARY_PATH=/usr/xenomai/lib
 insmod rtsnd.ko
 
 # Transférer l’exécutable par ssh sur la De1-SoC  **PC**
-scp intro_watchdog root@192.168.1.3:/home/root
+scp snd_player root@192.168.1.3:/home/root
 
 
 
